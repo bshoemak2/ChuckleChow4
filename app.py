@@ -1,0 +1,203 @@
+import logging
+try:
+    from flask import Flask, request, jsonify
+    from flask_cors import CORS
+    from flask_limiter import Limiter
+    from flask_limiter.util import get_remote_address
+    import os
+    from dotenv import load_dotenv
+    from recipe_generator import generate_dynamic_recipe, generate_random_recipe
+    from database import get_all_recipes, get_flavor_pairs, update_recipe_rating, get_recipe_comments
+except ImportError as e:
+    logging.error(f"Missing dependency during import: {str(e)}")
+    raise
+
+# Configure logging
+logging.basicConfig(
+    filename='app.log',
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s - %(pathname)s:%(lineno)d'
+)
+
+load_dotenv()
+
+app = Flask(__name__)
+
+# Configure CORS
+try:
+    CORS(app, resources={
+        r"/generate_recipe": {"origins": ["http://localhost:3000"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+        r"/elucidate_recipe": {"origins": ["http://localhost:3000"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+        r"/ingredients": {"origins": ["http://localhost:3000"], "methods": ["GET", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+        r"/api": {"origins": ["http://localhost:3000"], "methods": ["GET"], "allow_headers": ["Content-Type", "Origin"]},
+        r"/rate_recipe": {"origins": ["http://localhost:3000"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+        r"/recipe_comments": {"origins": ["http://localhost:3000"], "methods": ["GET", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]}
+    }, supports_credentials=True)
+    logging.info("CORS initialized successfully")
+except Exception as e:
+    logging.error(f"Failed to initialize CORS: {str(e)}")
+    raise
+
+# Configure rate limiting
+try:
+    limiter = Limiter(
+        get_remote_address,
+        app=app,
+        default_limits=["200 per day", "50 per hour"],
+        storage_uri="memory://"
+    )
+    logging.info("Rate limiter initialized successfully")
+except Exception as e:
+    logging.error(f"Failed to initialize rate limiter: {str(e)}")
+    raise
+
+@app.route('/api', methods=['GET'])
+def api():
+    return jsonify({"message": "Welcome to the Chuckle & Chow API"})
+
+@app.route('/ingredients', methods=['GET'])
+@limiter.limit("100 per minute")
+def ingredients():
+    try:
+        flavor_pairs = get_flavor_pairs()
+        logging.debug(f"Returning flavor pairs: {flavor_pairs}")
+        return jsonify(flavor_pairs)
+    except Exception as e:
+        logging.error(f"Error in ingredients endpoint: {str(e)}", exc_info=True)
+        return jsonify({"error": f"Failed to fetch ingredients: {str(e)}"}), 500
+
+@app.route('/generate_recipe', methods=['POST'])
+@limiter.limit("100 per minute")
+def generate_recipe():
+    try:
+        # Log raw request data
+        raw_data = request.get_data(as_text=True)
+        logging.debug(f"Raw request data: {raw_data}")
+
+        # Parse JSON
+        try:
+            data = request.get_json(force=True)
+        except Exception as e:
+            logging.error(f"Failed to parse JSON: {str(e)}, raw data: {raw_data}")
+            return jsonify({"text": f"Server error: Invalid JSON format - {str(e)}"}), 400
+
+        if not data:
+            logging.error("No JSON data provided")
+            return jsonify({"text": "Server error: No JSON data provided in request body"}), 400
+
+        ingredients = data.get('ingredients', [])
+        is_random = data.get('isRandom', False)
+        request_id = data.get('requestId', '')
+
+        logging.debug(f"Received generate_recipe request: ingredients={ingredients}, isRandom={is_random}, requestId={request_id}")
+
+        if not isinstance(ingredients, list):
+            logging.error(f"Invalid ingredients format: {ingredients}")
+            return jsonify({"text": "Server error: Ingredients must be a list of strings"}), 400
+
+        recipe = generate_random_recipe() if is_random else generate_dynamic_recipe(ingredients)
+        
+        if not recipe or 'text' not in recipe:
+            logging.error(f"Failed to generate recipe: {recipe}")
+            return jsonify({"text": f"Server error: Failed to generate recipe - {recipe}"}), 500
+
+        logging.info(f"Generated recipe: {recipe['text'][:50]}...")
+        response = jsonify(recipe)
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return response
+    except Exception as e:
+        logging.error(f"Error in generate_recipe: {str(e)}", exc_info=True)
+        return jsonify({"text": f"Server error: {str(e)}"}), 500
+
+@app.route('/elucidate_recipe', methods=['POST'])
+@limiter.limit("100 per minute")
+def elucidate_recipe():
+    try:
+        raw_data = request.get_data(as_text=True)
+        logging.debug(f"Raw request data: {raw_data}")
+
+        try:
+            data = request.get_json(force=True)
+        except Exception as e:
+            logging.error(f"Failed to parse JSON: {str(e)}, raw data: {raw_data}")
+            return jsonify({"text": f"Server error: Invalid JSON format - {str(e)}"}), 400
+
+        if not data or 'recipeText' not in data:
+            logging.error("Missing recipeText in elucidate_recipe request")
+            return jsonify({"text": "Server error: Missing recipeText in request body"}), 400
+
+        recipe_text = data['recipeText']
+        logging.debug(f"Elucidating recipe: {recipe_text[:100]}...")
+
+        recipe = generate_dynamic_recipe([], {'recipe_text': recipe_text})
+        if not recipe or 'text' not in recipe:
+            logging.error(f"Failed to elucidate recipe: {recipe}")
+            return jsonify({"text": "Server error: Failed to elucidate recipe"}), 500
+
+        logging.info(f"Elucidated recipe: {recipe['text'][:50]}...")
+        response = jsonify(recipe)
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return response
+    except Exception as e:
+        logging.error(f"Error in elucidate_recipe: {str(e)}", exc_info=True)
+        return jsonify({"text": f"Server error: {str(e)}"}), 500
+
+@app.route('/rate_recipe', methods=['POST'])
+@limiter.limit("50 per minute")
+def rate_recipe():
+    try:
+        raw_data = request.get_data(as_text=True)
+        logging.debug(f"Raw request data: {raw_data}")
+
+        try:
+            data = request.get_json(force=True)
+        except Exception as e:
+            logging.error(f"Failed to parse JSON: {str(e)}, raw data: {raw_data}")
+            return jsonify({"text": f"Server error: Invalid JSON format - {str(e)}"}), 400
+
+        if not data or 'recipe_id' not in data or 'rating' not in data:
+            logging.error("Missing required fields in rate_recipe request")
+            return jsonify({"text": "Server error: Missing recipe_id or rating in request body"}), 400
+
+        recipe_id = data['recipe_id']
+        rating = data['rating']
+        comment = data.get('comment', '')
+
+        if not isinstance(rating, int) or rating < 1 or rating > 5:
+            logging.error(f"Invalid rating value: {rating}")
+            return jsonify({"text": "Server error: Rating must be an integer between 1 and 5"}), 400
+
+        update_recipe_rating(recipe_id, rating, comment)
+        logging.info(f"Recipe rated: recipe_id={recipe_id}, rating={rating}")
+        response = jsonify({"message": "Rating submitted successfully"})
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return response
+    except Exception as e:
+        logging.error(f"Error in rate_recipe: {str(e)}", exc_info=True)
+        return jsonify({"text": f"Server error: {str(e)}"}), 500
+
+@app.route('/recipe_comments', methods=['GET'])
+@limiter.limit("100 per minute")
+def recipe_comments():
+    try:
+        recipe_id = request.args.get('recipe_id')
+        if not recipe_id:
+            logging.error("Missing recipe_id in recipe_comments request")
+            return jsonify({"text": "Server error: Missing recipe_id query parameter"}), 400
+
+        comments = get_recipe_comments(recipe_id)
+        logging.debug(f"Returning comments for recipe_id {recipe_id}: {comments}")
+        response = jsonify(comments)
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return response
+    except Exception as e:
+        logging.error(f"Error in recipe_comments: {str(e)}", exc_info=True)
+        return jsonify({"text": f"Server error: {str(e)}"}), 500
+
+if __name__ == '__main__':
+    try:
+        logging.info("Starting Flask server")
+        app.run(host='127.0.0.1', port=5000)
+    except Exception as e:
+        logging.error(f"Failed to start Flask server: {str(e)}")
+        raise

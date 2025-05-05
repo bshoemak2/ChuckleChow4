@@ -1,0 +1,22 @@
+# Python 
+venv/ 
+__pycache__/ 
+*.pyc 
+*.pyo 
+*.pyd 
+*.db 
+*.sqlite3 
+# Node.js 
+node_modules/ 
+dist/ 
+.env 
+# Logs 
+recipe_generator.log 
+# Build artifacts 
+web-build/ 
+src/index_sav04192025.tsx.bak 
+tsconfig.node.tsbuildinfo 
+tsconfig.tsbuildinfo 
+# Local files 
+notes.docx 
+public/favicon.ico 

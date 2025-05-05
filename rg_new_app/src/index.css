@@ -1,0 +1,19 @@
+/* Plain CSS for Chuckle & Chow */
+a, button {
+  background: linear-gradient(to right, pink, yellow);
+  border: 2px solid #00ff00;
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: transform 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+}
+a:hover, button:hover {
+  transform: scale(1.05);
+}
+button:disabled {
+  background: #ccc;
+  border: 2px solid #666;
+  cursor: not-allowed;
+}
