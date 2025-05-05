@@ -1,6 +1,6 @@
 import logging
 try:
-    from flask import Flask, request, jsonify
+    from flask import Flask, request, jsonify, send_from_directory
     from flask_cors import CORS
     from flask_limiter import Limiter
     from flask_limiter.util import get_remote_address
@@ -21,22 +21,16 @@ logging.basicConfig(
 
 load_dotenv()
 
-app = Flask(__name__)
-
-# Configure CORS
-try:
-    CORS(app, resources={
-        r"/generate_recipe": {"origins": ["http://localhost:3000"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
-        r"/elucidate_recipe": {"origins": ["http://localhost:3000"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
-        r"/ingredients": {"origins": ["http://localhost:3000"], "methods": ["GET", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
-        r"/api": {"origins": ["http://localhost:3000"], "methods": ["GET"], "allow_headers": ["Content-Type", "Origin"]},
-        r"/rate_recipe": {"origins": ["http://localhost:3000"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
-        r"/recipe_comments": {"origins": ["http://localhost:3000"], "methods": ["GET", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]}
-    }, supports_credentials=True)
-    logging.info("CORS initialized successfully")
-except Exception as e:
-    logging.error(f"Failed to initialize CORS: {str(e)}")
-    raise
+app = Flask(__name__, static_folder='rg_new_app/dist', template_folder='rg_new_app/dist')
+CORS(app, resources={
+    r"/generate_recipe": {"origins": ["http://localhost:3000", "https://chuckle-chow-4.onrender.com"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+    r"/elucidate_recipe": {"origins": ["http://localhost:3000", "https://chuckle-chow-4.onrender.com"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+    r"/ingredients": {"origins": ["http://localhost:3000", "https://chuckle-chow-4.onrender.com"], "methods": ["GET", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+    r"/api": {"origins": ["http://localhost:3000", "https://chuckle-chow-4.onrender.com"], "methods": ["GET"], "allow_headers": ["Content-Type", "Origin"]},
+    r"/rate_recipe": {"origins": ["http://localhost:3000", "https://chuckle-chow-4.onrender.com"], "methods": ["POST", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]},
+    r"/recipe_comments": {"origins": ["http://localhost:3000", "https://chuckle-chow-4.onrender.com"], "methods": ["GET", "OPTIONS"], "allow_headers": ["Content-Type", "Origin"]}
+}, supports_credentials=True)
+logging.info("CORS initialized successfully")
 
 # Configure rate limiting
 try:
@@ -50,6 +44,27 @@ try:
 except Exception as e:
     logging.error(f"Failed to initialize rate limiter: {str(e)}")
     raise
+
+# Serve frontend static files
+@app.route('/assets/<path:path>')
+def serve_static(path):
+    try:
+        return send_from_directory('rg_new_app/dist/assets', path)
+    except Exception as e:
+        logging.error(f"Error serving static file {path}: {str(e)}")
+        return jsonify({"error": "File not found"}), 404
+
+# Serve index.html for all non-API routes
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    try:
+        if path.startswith(('generate_recipe', 'ingredients', 'elucidate_recipe', 'rate_recipe', 'recipe_comments', 'api')):
+            return app.handle_http_exception(404)  # Let Flask handle API routes
+        return send_from_directory('rg_new_app/dist', 'index.html')
+    except Exception as e:
+        logging.error(f"Error serving frontend: {str(e)}")
+        return jsonify({"error": "Failed to serve frontend"}), 500
 
 @app.route('/api', methods=['GET'])
 def api():
@@ -70,11 +85,9 @@ def ingredients():
 @limiter.limit("100 per minute")
 def generate_recipe():
     try:
-        # Log raw request data
         raw_data = request.get_data(as_text=True)
         logging.debug(f"Raw request data: {raw_data}")
 
-        # Parse JSON
         try:
             data = request.get_json(force=True)
         except Exception as e:
