@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Favorite, Recipe } from './types';
-import './styles.css?v=3.5';
+import { Recipe } from './types';
+import './styles.css?v=3.9';
 
 const generateUUID = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -39,6 +39,15 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 }
 
+const decodeMarkdown = (text: string): string => {
+  return text
+    .replace(/###\s/g, '🍴 ') // Convert ### to fork emoji
+    .replace(/\*\*(.*?)\*\*/g, '🔥 $1 🔥') // Convert **text** to fire emojis
+    .replace(/^- /gm, '➡️ ') // Convert - to arrow emoji
+    .replace(/^\d+\.\s/gm, '➡️ ') // Convert numbered lists to arrow emoji
+    .replace(/\n\n/g, '\n'); // Reduce double newlines
+};
+
 export default function HomeScreen() {
   console.log('INDEX_TXS_HOMESCREEN_2025_05_04', new Date().toISOString());
   const [meat, setMeat] = useState('');
@@ -53,13 +62,10 @@ export default function HomeScreen() {
   const [lastRandom, setLastRandom] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
-  const [showFavorites, setShowFavorites] = useState(false);
-  const [selectedFavorite, setSelectedFavorite] = useState<Favorite | null>(null);
-  const [search, setSearch] = useState('');
   const [theme, setTheme] = useState<'light' | 'dark'>(
     (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
   );
+  const [showWelcome, setShowWelcome] = useState(!localStorage.getItem('welcomeDismissed'));
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
@@ -72,6 +78,28 @@ export default function HomeScreen() {
     "Hold yer horses, we’re grillin’ a masterpiece! 🐴",
     "Stirrin’ the pot with more spice than a jalapeño’s armpit! 🌶️",
   ];
+
+  const PROMO_QUOTES = [
+    "🥃 Smoother than moonshine on a summer night",
+    "🔥 Spicier than a firecracker in a skillet",
+    "🌽 Sweeter than corn on the cob at a hoedown",
+    "🍺 Best with a cold one, yeehaw!",
+    "🐷 Crazier than a hog on a hot tin roof",
+    "🍖 Tastier than a possum pie at a picnic",
+    "🐔 Fresher than a rooster’s crow at dawn",
+    "🍞 Warmer than biscuits fresh outta the oven",
+    "💥 Bolder than a bull in a china shop",
+    "🌶️ Hotter than a jalapeño’s armpit",
+  ];
+
+  // Randomly select 3 quotes, strip any leading "??"
+  const getRandomQuotes = () => {
+    const shuffled = [...PROMO_QUOTES].sort(() => Math.random() - 0.5);
+    const selectedQuotes = shuffled.slice(0, 3).map(quote => quote.replace(/^\?+\s*/, '') || '🍺 Best with a cold one, yeehaw!');
+    console.log('Selected promo quotes:', JSON.stringify(selectedQuotes, null, 2)); // Explicit string logging
+    return selectedQuotes.map(quote => quote.replace(/^\?+\s*/, '')); // Third sanitization layer
+  };
+  const promoQuotes = getRandomQuotes();
 
   useEffect(() => {
     console.log('HomeScreen rendered with theme:', theme);
@@ -110,7 +138,9 @@ export default function HomeScreen() {
       });
     }
     document.body.className = theme === 'dark' ? 'dark-theme' : '';
-  }, [theme]);
+    // Log rendered promo quotes
+    console.log('Rendered promo quotes:', JSON.stringify(promoQuotes, null, 2));
+  }, [theme, promoQuotes]);
 
   const INGREDIENT_CATEGORIES = {
     meat: [
@@ -123,6 +153,10 @@ export default function HomeScreen() {
       { name: 'ribeye steaks', emoji: '🍽️' },
       { name: 'rabbit', emoji: '🐰' },
       { name: 'quail', emoji: '🐦' },
+      { name: 'pork ribs', emoji: '🍖' },
+      { name: 'beef ribs', emoji: '🍖' },
+      { name: 'crow', emoji: '🐦' },
+      { name: 'goat', emoji: '🐐' },
     ],
     vegetables: [
       { name: 'cauliflower', emoji: '🥦' },
@@ -134,6 +168,8 @@ export default function HomeScreen() {
       { name: 'green beans', emoji: '🌱' },
       { name: 'okra', emoji: '🌿' },
       { name: 'collards', emoji: '🥬' },
+      { name: 'chef salad', emoji: '🥗' },
+      { name: 'sugar cane', emoji: '🌾' },
     ],
     fruits: [
       { name: 'apple', emoji: '🍎' },
@@ -173,6 +209,9 @@ export default function HomeScreen() {
       { name: 'pasta', emoji: '🍝' },
       { name: 'rice', emoji: '🍚' },
       { name: 'tortilla', emoji: '🌮' },
+      { name: 'biscuits', emoji: '🥐' },
+      { name: 'cachapas', emoji: '🌽' },
+      { name: 'cornbread', emoji: '🍞' },
     ],
     devilWater: [
       { name: 'beer', emoji: '🍺' },
@@ -180,6 +219,9 @@ export default function HomeScreen() {
       { name: 'whiskey', emoji: '🥃' },
       { name: 'vodka', emoji: '🍸' },
       { name: 'tequila', emoji: '🌵' },
+      { name: 'rum', emoji: '🏴‍☠️' },
+      { name: 'scotch', emoji: '🥃' },
+      { name: 'malt liquor', emoji: '🍺' },
     ],
   };
 
@@ -257,39 +299,6 @@ export default function HomeScreen() {
       description: 'This Hillbilly Cast Iron Skillet is the best cast iron skillet for Southern cooking, tougher than a mule’s hide and seasoned better than Granny’s gossip! Fry up catfish, cornbread, or bacon crispier than a June bug on a hot sidewalk. Perfect for redneck chefs who live for that sizzle, this skillet’s built to last through fish fries, campfires, and tailgate brawls. A must-have for country kitchens, it’s pre-seasoned and ready to churn out soul food that’ll make your kinfolk weep. Grab this skillet and cook like a Southern legend!'
     },
   ];
-
-  useEffect(() => {
-    const loadFavorites = () => {
-      try {
-        const saved = localStorage.getItem('favorites');
-        if (saved) {
-          const parsedFavorites: Favorite[] = JSON.parse(saved);
-          const cleanedFavorites = parsedFavorites.map(fav => ({
-            text: fav.text || 'Unknown Recipe',
-            id: fav.id || Date.now(),
-            rating: fav.rating || 0,
-            title: fav.title || 'Unknown Recipe',
-            ingredients: fav.ingredients || [],
-            steps: fav.steps || [],
-            cooking_time: fav.cooking_time || 0,
-            difficulty: fav.difficulty || 'easy',
-            servings: fav.servings || 2,
-            nutrition: fav.nutrition || { calories: 0, protein: 0, fat: 0, chaos_factor: 0 },
-            equipment: fav.equipment || [],
-            chaos_gear: fav.chaos_gear || '',
-            tips: fav.tips || [],
-            shareText: fav.shareText || '',
-          }));
-          setFavorites(cleanedFavorites);
-          localStorage.setItem('favorites', JSON.stringify(cleanedFavorites));
-          console.log('Favorites loaded:', cleanedFavorites);
-        }
-      } catch (error) {
-        console.error('Error loading favorites:', error);
-      }
-    };
-    loadFavorites();
-  }, [theme]);
 
   const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -398,66 +407,10 @@ export default function HomeScreen() {
     debouncedFetchRecipe(true);
   };
 
-  const saveFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (recipe && !favorites.some((fav) => fav.title === recipe.title)) {
-      const recipeWithId: Favorite = {
-        id: Date.now(),
-        rating: 0,
-        title: recipe.title,
-        ingredients: recipe.ingredients,
-        steps: recipe.steps,
-        cooking_time: recipe.cooking_time,
-        difficulty: recipe.difficulty,
-        servings: recipe.servings,
-        nutrition: recipe.nutrition,
-        equipment: recipe.equipment,
-        chaos_gear: recipe.chaos_gear,
-        tips: recipe.tips,
-        shareText: recipe.shareText
-      };
-      const newFavorites = [...favorites, recipeWithId];
-      setFavorites(newFavorites);
-      try {
-        localStorage.setItem('favorites', JSON.stringify(newFavorites));
-        console.log('Recipe saved to favorites:', recipeWithId);
-        window.alert('Recipe saved to favorites!');
-      } catch (error) {
-        console.error('Error saving favorite:', error);
-        window.alert('Failed to save favorite.');
-      }
-    } else {
-      window.alert('Recipe already in favorites!');
-    }
-  };
-
-  const removeFavorite = (recipeId: number) => {
-    if (!recipeId) {
-      window.alert('Cannot remove recipe: Invalid ID');
-      return;
-    }
-    const confirmRemoval = window.confirm('Are you sure you want to remove this recipe?');
-    if (confirmRemoval) {
-      try {
-        const newFavorites = favorites.filter((fav) => fav.id !== recipeId);
-        setFavorites(newFavorites);
-        if (selectedFavorite && selectedFavorite.id === recipeId) {
-          setSelectedFavorite(null);
-        }
-        localStorage.setItem('favorites', JSON.stringify(newFavorites));
-        console.log('Recipe removed from favorites:', recipeId);
-        window.alert('Recipe removed from favorites');
-      } catch (error) {
-        console.error('Error removing favorite:', error);
-        window.alert('Failed to save favorite.');
-      }
-    }
-  };
-
   const shareRecipe = (platform: 'facebook' | 'twitter' | 'default' = 'default') => {
-    const currentRecipe = selectedFavorite || recipe;
+    const currentRecipe = recipe;
     if (!currentRecipe) return;
-    const shareText = currentRecipe.shareText || JSON.stringify(currentRecipe);
+    const shareText = decodeMarkdown(currentRecipe.shareText || JSON.stringify(currentRecipe));
     const url = 'https://chuckle-chow-backend.onrender.com/';
     const fullMessage = `Get a load of this hogwash: ${shareText}\nCheck out my app: ${url} 🤠`;
     try {
@@ -483,9 +436,9 @@ export default function HomeScreen() {
 
   const copyToClipboard = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const currentRecipe = selectedFavorite || recipe;
+    const currentRecipe = recipe;
     if (!currentRecipe) return;
-    const textToCopy = currentRecipe.shareText || JSON.stringify(currentRecipe);
+    const textToCopy = decodeMarkdown(currentRecipe.shareText || JSON.stringify(currentRecipe));
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -507,18 +460,14 @@ export default function HomeScreen() {
     setRecipe(null);
     setError(null);
     setLastRandom(false);
-    setSelectedFavorite(null);
-    setSearch('');
-  };
-
-  const toggleFavorites = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setShowFavorites(!showFavorites);
-    setSelectedFavorite(null);
-    setSearch('');
   };
 
   const getRandomLoadingMessage = () => LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
+
+  const dismissWelcome = () => {
+    setShowWelcome(false);
+    localStorage.setItem('welcomeDismissed', 'true');
+  };
 
   interface PickerSectionProps {
     label: string;
@@ -563,64 +512,6 @@ export default function HomeScreen() {
     );
   });
 
-  const FavoritesList: React.FC = React.memo(() => {
-    const filteredFavorites = favorites.filter((fav) =>
-      (fav.title || '').toLowerCase().includes(search.toLowerCase())
-    );
-    const clearSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      setSearch('');
-    };
-
-    return (
-      <div className="favorites">
-        <h2 className="subheader">⭐ Favorites 💖</h2>
-        <div className="search-row">
-          <input
-            placeholder="Search Favorites..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            aria-label="Search favorites"
-            className="search-input"
-          />
-          <button
-            onClick={clearSearch}
-            aria-label="Clear search"
-            className="clear-button"
-            title="Wipe that search clean, partner!"
-          >
-            <span className="clear-button-text">✖</span>
-          </button>
-        </div>
-        {filteredFavorites.length ? (
-          filteredFavorites.map((item) => (
-            <div key={item.id} className="fav-item-container">
-              <div
-                className="fav-item"
-                onClick={() => setSelectedFavorite(item)}
-                tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && setSelectedFavorite(item)}
-                aria-label={`View ${item.title ? item.title.slice(0, 50) : 'Recipe'}...`}
-              >
-                <p className="fav-item-text">🌟 ${item.title ? item.title.slice(0, 50) : 'Recipe'}...</p>
-              </div>
-              <button
-                onClick={() => item.id && removeFavorite(item.id)}
-                aria-label={`Remove ${item.title ? item.title.slice(0, 50) : 'Recipe'}... from favorites`}
-                className="remove-button"
-                title="Toss this recipe outta the stash!"
-              >
-                <span className="remove-button-text">Remove ❌</span>
-              </button>
-            </div>
-          ))
-        ) : (
-          <p className="no-favorites">No favorites found</p>
-        )}
-      </div>
-    );
-  });
-
   const AffiliateSection: React.FC = React.memo(() => (
     <div className="affiliate-section">
       <p className="affiliate-header">💰 Git Yer Loot Here, Y’all! 💸</p>
@@ -653,18 +544,16 @@ export default function HomeScreen() {
   ));
 
   interface RecipeCardProps {
-    recipe: Recipe | Favorite;
+    recipe: Recipe;
     onShare: (platform?: 'facebook' | 'twitter' | 'default') => void;
-    onSave?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onBack?: () => void;
   }
 
-  const RecipeCard: React.FC<RecipeCardProps> = React.memo(({ recipe, onShare, onSave, onBack }) => {
+  const RecipeCard: React.FC<RecipeCardProps> = React.memo(({ recipe, onShare }) => {
     console.log('RecipeCard rendering with recipe:', JSON.stringify(recipe).slice(0, 100) + '...');
 
-    if ('text' in recipe && recipe.text) {
-      const lines = recipe.text.split('\n').filter(line => line.trim());
-      const parsedLines = lines.map(line => {
+    if (recipe.text) {
+      const lines = recipe.text.split('\n').filter((line: string) => line.trim());
+      const parsedLines = lines.map((line: string) => {
         const stepMatch = line.match(/^\d+\.\s+(.+)/);
         if (stepMatch) {
           return `${stepMatch[1]}`;
@@ -674,7 +563,7 @@ export default function HomeScreen() {
 
       return (
         <div className="recipe-card animate-slide-in">
-          {parsedLines.map((line, i) => {
+          {parsedLines.map((line: string, i: number) => {
             if (line.startsWith('### **') || line.startsWith('# ') || line.startsWith('## ')) {
               return <h2 key={i} className="recipe-title">{line.replace(/### \*\*|## |# |(\*\*)/g, '')}</h2>;
             } else if (line.startsWith('**') && line.endsWith('**')) {
@@ -687,7 +576,7 @@ export default function HomeScreen() {
               return <p key={i} className="recipe-item">{line}</p>;
             }
           })}
-          {'nutrition' in recipe && recipe.nutrition && (
+          {recipe.nutrition && (
             <div className="chaos-meter">
               <p>Chaos Factor: ${recipe.nutrition.chaos_factor}/10</p>
               <div className="chaos-bar" style={{ width: `${recipe.nutrition.chaos_factor * 10}%` }}></div>
@@ -726,26 +615,6 @@ export default function HomeScreen() {
             >
               <span className="action-button-text">📣 Share to Pals</span>
             </button>
-            {onSave && (
-              <button
-                className="action-button save-favorite"
-                onClick={onSave}
-                aria-label="Save to favorites"
-                title="Hoard this gem for later!"
-              >
-                <span className="action-button-text">💾 Hoard This Gem</span>
-              </button>
-            )}
-            {onBack && (
-              <button
-                className="action-button back-to-favorites"
-                onClick={onBack}
-                aria-label="Back to favorites list"
-                title="Back to yer stash, partner!"
-              >
-                <span className="action-button-text">⬅️ Back to the Heap</span>
-              </button>
-            )}
           </div>
         </div>
       );
@@ -762,7 +631,7 @@ export default function HomeScreen() {
       servings = 0,
       tips = [],
       chaos_gear = ''
-    } = recipe as Recipe;
+    } = recipe;
 
     return (
       <div className="recipe-card animate-slide-in">
@@ -839,26 +708,6 @@ export default function HomeScreen() {
           >
             <span className="action-button-text">📣 Share to Pals</span>
           </button>
-          {onSave && (
-            <button
-              className="action-button save-favorite"
-              onClick={onSave}
-              aria-label="Save to favorites"
-              title="Hoard this gem for later!"
-            >
-              <span className="action-button-text">💾 Hoard This Gem</span>
-            </button>
-          )}
-          {onBack && (
-            <button
-              className="action-button back-to-favorites"
-              onClick={onBack}
-              aria-label="Back to favorites list"
-              title="Back to yer stash, partner!"
-            >
-              <span className="action-button-text">⬅️ Back to the Heap</span>
-            </button>
-          )}
         </div>
       </div>
     );
@@ -869,6 +718,17 @@ export default function HomeScreen() {
   return (
     <ErrorBoundary>
       <div className="main-container" ref={scrollContainerRef}>
+        {showWelcome && (
+          <div className="welcome-modal">
+            <div className="welcome-content">
+              <h2>Howdy, Y’all! 🤠</h2>
+              <p>Yeehaw, welcome to *Chuckle & Chow*! 🤠🔥 Grab them dropdowns, slam 'Surprise Me!' for a hog-wild dish, or hit 'Cook Me a Hoot!' to stir up some Southern mayhem! 🌪️🍖 Got a bone to pick? Holler at <a href="mailto:bshoemak@mac.com">bshoemak@mac.com</a>! 📧</p>
+              <button className="welcome-button" onClick={dismissWelcome}>
+                Got It!
+              </button>
+            </div>
+          </div>
+        )}
         <div className="content-container">
           <div className="header-container">
             <h1 className="header">🤪 Chuckle & Chow: Recipe Rumble 🍔💥</h1>
@@ -883,9 +743,9 @@ export default function HomeScreen() {
             <span className="action-button-text">{theme === 'light' ? '🌙 Moonshine Mode' : '🌞 Daylight Chaos'}</span>
           </button>
           <div className="promo-container">
-            <p className="promo-text">🌶️ Hotter than a jalapeño’s armpit</p>
-            <p className="promo-text">🍺 Best with a cold one, yeehaw!</p>
-            <p className="promo-text">🐷 Crazier than a hog on a hot tin roof</p>
+            {promoQuotes.map((quote, index) => (
+              <p key={`promo-${index}-${quote}`} className="promo-text">{quote.replace(/^\?+\s*/, '')}</p> // Unique key and sanitization
+            ))}
           </div>
           <PickerSection
             label="🥩 Meaty Madness 🍖"
@@ -921,6 +781,7 @@ export default function HomeScreen() {
             value={dairy}
             onValueChange={setDairy}
             className="dairy"
+            labelStyle={{ color: '#000000' }}
           />
           <PickerSection
             label="🍞 Carb Craze 🍝"
@@ -1007,25 +868,13 @@ export default function HomeScreen() {
             >
               <span className="action-button-text">🧹 Wipe the Slate, Bubba 🐴</span>
             </button>
-            <button
-              className="action-button toggle-favorites"
-              onClick={toggleFavorites}
-              aria-label={showFavorites ? 'Hide favorites' : 'Show favorites'}
-              title={showFavorites ? 'Hide yer treasure!' : 'Show off yer stash!'}
-            >
-              <span className="action-button-text">{showFavorites ? '🙈 Hide My Stash' : '💰 Show My Stash'}</span>
-            </button>
           </div>
           {recipe && (
-            <RecipeCard recipe={recipe} onShare={shareRecipe} onSave={saveFavorite} />
-          )}
-          {showFavorites && favorites.length > 0 && <FavoritesList />}
-          {selectedFavorite && (
-            <RecipeCard recipe={selectedFavorite} onShare={shareRecipe} onBack={() => setSelectedFavorite(null)} />
+            <RecipeCard recipe={recipe} onShare={shareRecipe} />
           )}
           <div className="donation-section">
             <p className="donation-message">
-              🍺 xAi ain't free! To help pay for sweet southern Ai recipes donate some bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ( $barlitorobusto ). Thank Ye 🤠
+              xAi ain't free! To help pay for recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ( $barlitorobusto ). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking...just ask via email.
             </p>
           </div>
           <AffiliateSection />
@@ -1045,7 +894,7 @@ export default function HomeScreen() {
                   </a>
                 </p>
                 <p className="footer-copyright">© 2025 Chuckle & Chow 🌟</p>
-                <p className="footer-contact%EBB-text game-theory-text">
+                <p className="footer-contact-text game-theory-text">
                   Check out other funny and useful apps by Game Theory 🎮
                 </p>
                 <ul className="footer-links">

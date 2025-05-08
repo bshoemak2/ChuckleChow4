@@ -24,32 +24,32 @@ load_dotenv()
 app = Flask(__name__, static_folder='rg_new_app/dist', template_folder='rg_new_app/dist')
 CORS(app, resources={
     r"/generate_recipe": {
-        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com", "https://chuckle-chow-frontend.onrender.com"],
+        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com"],
         "methods": ["POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Origin"]
     },
     r"/elucidate_recipe": {
-        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com", "https://chuckle-chow-frontend.onrender.com"],
+        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com"],
         "methods": ["POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Origin"]
     },
     r"/ingredients": {
-        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com", "https://chuckle-chow-frontend.onrender.com"],
+        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com"],
         "methods": ["GET", "OPTIONS"],
         "allow_headers": ["Content-Type", "Origin"]
     },
     r"/api": {
-        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com", "https://chuckle-chow-frontend.onrender.com"],
+        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com"],
         "methods": ["GET"],
         "allow_headers": ["Content-Type", "Origin"]
     },
     r"/rate_recipe": {
-        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com", "https://chuckle-chow-frontend.onrender.com"],
+        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com"],
         "methods": ["POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Origin"]
     },
     r"/recipe_comments": {
-        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com", "https://chuckle-chow-frontend.onrender.com"],
+        "origins": ["http://localhost:5000", "https://chuckle-chow-backend.onrender.com"],
         "methods": ["GET", "OPTIONS"],
         "allow_headers": ["Content-Type", "Origin"]
     }
