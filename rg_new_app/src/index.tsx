@@ -174,7 +174,7 @@ export default function HomeScreen() {
     },
     {
       title: '🍺 Redneck Beer Pong Kit 🍺',
-      url: 'https://amzn.to/42re transposed7n7',
+      url: 'https://amzn.to/42re7n7',
       image: 'https://m.media-amazon.com/images/I/81ZrDViTBTL._AC_SY355_.jpg',
     },
     {
@@ -218,6 +218,82 @@ export default function HomeScreen() {
       image: 'https://m.media-amazon.com/images/I/81lU5G0EU-L._AC_SX425_.jpg',
     },
   ];
+
+  // Parse markdown text into structured recipe
+  const parseRecipeText = (text: string): Recipe => {
+    const lines = text.split('\n').filter(line => line.trim());
+    let title = 'Untitled Recipe';
+    const ingredients: Recipe['ingredients'] = [];
+    const steps: Recipe['steps'] = [];
+    let nutrition: Recipe['nutrition'] = { calories: 0, protein: 0, fat: 0, chaos_factor: 0 };
+    const equipment: string[] = [];
+    let cooking_time = 0;
+    let difficulty = 'Unknown';
+    let servings = 1;
+    const tips: string[] = [];
+
+    let currentSection: string | null = null;
+
+    for (const line of lines) {
+      if (line.startsWith('# ')) {
+        title = line.replace(/^#+\s*/, '').trim();
+      } else if (line.startsWith('## Ingredients') || line.startsWith('### Ingredients')) {
+        currentSection = 'ingredients';
+      } else if (line.startsWith('## Steps') || line.startsWith('### Steps')) {
+        currentSection = 'steps';
+      } else if (line.startsWith('## Nutrition') || line.startsWith('### Nutrition')) {
+        currentSection = 'nutrition';
+      } else if (line.startsWith('## Equipment') || line.startsWith('### Equipment')) {
+        currentSection = 'equipment';
+      } else if (line.startsWith('## Tip') || line.startsWith('### Tip')) {
+        currentSection = 'tips';
+      } else if (line.startsWith('**Cooking Time:**') || line.startsWith('### Cooking Time:')) {
+        const match = line.match(/\d+/);
+        cooking_time = match ? parseInt(match[0]) : 0;
+      } else if (line.startsWith('**Difficulty:**') || line.startsWith('### Difficulty:')) {
+        difficulty = line.replace(/.*?:\s*/, '').trim();
+      } else if (line.startsWith('**Servings:**') || line.startsWith('### Servings:')) {
+        const match = line.match(/\d+/);
+        servings = match ? parseInt(match[0]) : 1;
+      } else if (currentSection === 'ingredients' && line.startsWith('- ')) {
+        ingredients.push(line.replace(/^-+\s*/, '').trim());
+      } else if (currentSection === 'steps' && /^\d+\.\s*/.test(line)) {
+        steps.push(line.replace(/^\d+\.\s*/, '').trim());
+      } else if (currentSection === 'nutrition') {
+        if (line.includes('Calories:')) {
+          const match = line.match(/(\d+)/);
+          nutrition.calories = match ? parseInt(match[0]) : 0;
+        } else if (line.includes('Protein:')) {
+          const match = line.match(/(\d+)/);
+          nutrition.protein = match ? parseInt(match[0]) : 0;
+        } else if (line.includes('Fat:')) {
+          const match = line.match(/(\d+)/);
+          nutrition.fat = match ? parseInt(match[0]) : 0;
+        } else if (line.includes('Chaos Factor:')) {
+          const match = line.match(/(\d+)/);
+          nutrition.chaos_factor = match ? parseInt(match[0]) : 0;
+        }
+      } else if (currentSection === 'equipment' && line.startsWith('- ')) {
+        equipment.push(line.replace(/^-+\s*/, '').trim());
+      } else if (currentSection === 'tips' && line.trim()) {
+        tips.push(line.trim());
+      }
+    }
+
+    return {
+      title,
+      ingredients,
+      steps,
+      nutrition,
+      equipment,
+      cooking_time,
+      difficulty,
+      servings,
+      tips,
+      chaos_gear: equipment.find(item => item.toLowerCase().includes('chaos')) || '',
+      shareText: text,
+    };
+  };
 
   useEffect(() => {
     const loadFavorites = () => {
@@ -288,10 +364,15 @@ export default function HomeScreen() {
     try {
       const data = await generateRecipe(selectedIngredients, isRandom);
       console.log('Fetched recipe:', JSON.stringify(data, null, 2));
-      if (!data || !data.title || data.title === 'Error Recipe') {
+      // Parse markdown text if no structured fields
+      if (data && data.text && !data.title) {
+        const parsedRecipe = parseRecipeText(data.text);
+        setRecipe(parsedRecipe);
+      } else if (data && data.title && data.title !== 'Error Recipe') {
+        setRecipe(data);
+      } else {
         throw new Error('Invalid recipe received from server');
       }
-      setRecipe(data);
     } catch (error: any) {
       console.error('Fetch error:', error.message, error.stack);
       setError(`Cookin’ crashed: ${error.message} 🤡`);
@@ -578,27 +659,29 @@ export default function HomeScreen() {
   const AffiliateSection: React.FC = () => (
     <div className="affiliate-section">
       <p className="affiliate-header">💰 Git Yer Loot Here, Y’all! 💸</p>
-      {AFFILIATE_LINKS.map((link, index) => (
-        <motion.a
-          key={link.title}
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`affiliate-button affiliate-button-${index + 1}`}
-          whileHover={{ scale: 1.05, rotate: 2 }}
-          aria-label={`Visit affiliate link: ${link.title}`}
-        >
-          <img
-            src={link.image}
-            alt={link.title}
-            className="affiliate-image"
-            onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-              e.currentTarget.src = '/assets/fallback.png';
-            }}
-          />
-          <span className="affiliate-text">${link.title}</span>
-        </motion.a>
-      ))}
+      <div className="affiliate-links">
+        {AFFILIATE_LINKS.map((link, index) => (
+          <motion.a
+            key={link.title}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`affiliate-button affiliate-button-${index + 1}`}
+            whileHover={{ scale: 1.05, rotate: 2 }}
+            aria-label={`Visit affiliate link: ${link.title}`}
+          >
+            <img
+              src={link.image}
+              alt={link.title}
+              className="affiliate-image"
+              onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                e.currentTarget.src = '/assets/fallback.png';
+              }}
+            />
+            <span className="affiliate-text">${link.title}</span>
+          </motion.a>
+        ))}
+      </div>
       <p className="affiliate-disclaimer">
         As an Amazon Associate, I earn from qualifyin’ purchases, yeehaw!
       </p>
@@ -1041,27 +1124,23 @@ export default function HomeScreen() {
             </div>
           )}
           <AffiliateSection />
-          <div className="footer">
-            <div className="footer-container">
+          <footer className="footer">
+            <div className="footer-content">
               <img src="/assets/gt.png" alt="Logo" className="footer-logo" />
-              <div className="footer-text-container">
-                <Link to="/privacy-policy" className="footer-privacy-text" aria-label="Privacy Policy">
-                  Privacy Policy 🕵️‍♂️
-                </Link>
-                <p className="footer-contact-text">
+              <div className="footer-links">
+                <Link to="/privacy-policy" className="footer-link">Privacy Policy 🕵️‍♂️</Link>
+                <p className="footer-contact">
                   Got issues? Holler at{' '}
-                  <a href="mailto:bshoemak@mac.com" className="footer-email-link" aria-label="Email support">
-                    bshoemak@mac.com 📧
-                  </a>
+                  <a href="mailto:bshoemak@mac.com" className="footer-email">bshoemak@mac.com 📧</a>
                 </p>
-                <p className="footer-contact-text">
+                <p className="footer-donation">
                   To help pay for xAi recipes donate bucks or sweet gold nuggets to bshoemak@mac.com via Zelle, Apple Pay, or CashApp ($barlitorobusto). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking at...just ask via email.
                 </p>
                 <p className="footer-copyright">© 2025 Chuckle & Chow 🌟</p>
               </div>
               <img src="/assets/fallback.png" alt="Fallback" className="footer-fallback" />
             </div>
-          </div>
+          </footer>
         </motion.div>
       </div>
     </ErrorBoundary>
