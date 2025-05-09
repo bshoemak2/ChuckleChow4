@@ -236,34 +236,34 @@ export default function HomeScreen() {
     let currentSection: string | null = null;
 
     for (const line of lines) {
-      // Handle title with varying markdown levels (#, ##, ###)
-      if (line.match(/^#+/)) {
-        const titleMatch = line.match(/^#+ (.*)/);
+      // Handle title with varying markdown levels (#, ##, ###) or "Title:" prefix
+      if (line.match(/^#+/) || line.match(/^Title:/i)) {
+        const titleMatch = line.match(/^#+ (.*)/) || line.match(/^Title: (.*)/i);
         if (titleMatch) {
-          title = titleMatch[1].replace(/\*\*/g, '').trim();
+          title = titleMatch[1].replace(/[\*_\[\]]/g, '').trim();
         }
-      } else if (line.match(/^(##+|###+) Ingredients/)) {
+      } else if (line.match(/^(##+|###+) Ingredients/i)) {
         currentSection = 'ingredients';
-      } else if (line.match(/^(##+|###+) (Steps|Instructions)/)) {
+      } else if (line.match(/^(##+|###+) (Steps|Instructions)/i)) {
         currentSection = 'steps';
-      } else if (line.match(/^(##+|###+) Nutrition/)) {
+      } else if (line.match(/^(##+|###+) Nutrition/i)) {
         currentSection = 'nutrition';
-      } else if (line.match(/^(##+|###+) Equipment/)) {
+      } else if (line.match(/^(##+|###+) Equipment/i)) {
         currentSection = 'equipment';
-      } else if (line.match(/^(##+|###+) Tip/)) {
+      } else if (line.match(/^(##+|###+) Tip/i)) {
         currentSection = 'tips';
-      } else if (line.match(/^(?:\*\*|##+|###) ?Cooking Time:/)) {
+      } else if (line.match(/^(?:\*\*|##+|###) ?Cooking Time:/i)) {
         const match = line.match(/\d+/);
         cooking_time = match ? parseInt(match[0]) : 0;
-      } else if (line.match(/^(?:\*\*|##+|###) ?Difficulty:/)) {
+      } else if (line.match(/^(?:\*\*|##+|###) ?Difficulty:/i)) {
         difficulty = line.replace(/.*?:\s*/, '').trim();
-      } else if (line.match(/^(?:\*\*|##+|###) ?Servings:/)) {
+      } else if (line.match(/^(?:\*\*|##+|###) ?Servings:/i)) {
         const match = line.match(/\d+/);
         servings = match ? parseInt(match[0]) : 1;
       } else if (currentSection === 'ingredients' && line.match(/^- /)) {
-        ingredients.push(line.replace(/^-+\s*/, '').replace(/\*\*/g, '').trim());
+        ingredients.push(line.replace(/^-+\s*/, '').replace(/[\*_]/g, '').trim());
       } else if (currentSection === 'steps' && line.match(/^\d+\.\s*/)) {
-        steps.push(line.replace(/^\d+\.\s*/, '').trim());
+        steps.push(line.replace(/^\d+\.\s*/, '').replace(/[\*_]/g, '').trim());
       } else if (currentSection === 'nutrition' && line.match(/^- /)) {
         if (line.includes('Calories:')) {
           const match = line.match(/(\d+)/);
@@ -279,13 +279,13 @@ export default function HomeScreen() {
           nutrition.chaos_factor = match ? parseInt(match[0]) : 0;
         }
       } else if (currentSection === 'equipment' && line.match(/^- /)) {
-        const equip = line.replace(/^-+\s*/, '').trim();
+        const equip = line.replace(/^-+\s*/, '').replace(/[\*_]/g, '').trim();
         equipment.push(equip);
         if (equip.toLowerCase().includes('chaos')) {
           chaos_gear = equip;
         }
-      } else if (currentSection === 'tips' && line.trim()) {
-        tips.push(line.trim());
+      } else if (currentSection === 'tips' && line.trim() && !line.match(/^#/)) {
+        tips.push(line.replace(/[\*_]/g, '').trim());
       }
     }
 
@@ -579,7 +579,7 @@ export default function HomeScreen() {
             className="toggle-arrow"
             width="16"
             height="16"
-            viewBox="0 0 24 24"
+            viewBox="0 24 24 24"
             fill="none"
             stroke="#FFD700"
             strokeWidth="2"
