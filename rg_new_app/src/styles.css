@@ -7,7 +7,7 @@ body {
 }
 
 .main-container {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -25,12 +25,12 @@ body {
 }
 
 .header {
-  font-size: 2.5em;
+  font-size: 2em;
   color: #333;
 }
 
 .subheader {
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #666;
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .promo-text {
-  font-size: 1.1em;
+  font-size: 1em;
   color: #444;
   margin: 5px 0;
 }
@@ -50,11 +50,11 @@ body {
 .input-section {
   margin: 10px 0;
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
 }
 
 .input-label {
-  padding: 10px;
+  padding: 8px;
   color: white;
   font-weight: bold;
   border-radius: 5px;
@@ -64,17 +64,17 @@ body {
 }
 
 .toggle-arrow {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
 }
 
 .picker {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   margin-top: 5px;
   border: none;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 0.9em;
   color: white;
 }
 
@@ -88,8 +88,8 @@ body {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #3498db;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
@@ -101,7 +101,7 @@ body {
 
 .spinner-text {
   margin-top: 10px;
-  font-size: 1.1em;
+  font-size: 1em;
   color: #444;
 }
 
@@ -113,7 +113,7 @@ body {
 
 .error {
   color: #e74c3c;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 /* Button Row */
@@ -121,17 +121,17 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   margin: 20px 0;
 }
 
 .action-button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   background-color: #3498db;
   color: white;
-  font-size: 1em;
+  font-size: 0.9em;
   cursor: pointer;
 }
 
@@ -170,66 +170,66 @@ body {
 /* Recipe Card */
 .recipe-card {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px 0;
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
 }
 
 .recipe-title {
-  font-size: 1.8em;
+  font-size: 1.5em;
   color: #333;
 }
 
 .recipe-section {
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #444;
-  margin: 10px 0 5px;
+  margin: 8px 0 4px;
 }
 
 .recipe-item {
-  font-size: 1em;
+  font-size: 0.9em;
   color: #666;
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .recipe-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 /* Favorites */
 .favorites {
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   margin: 20px 0;
 }
 
 .subtitle {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: #333;
 }
 
 .search-row {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
 .input {
   flex: 1;
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .clear-button {
-  padding: 10px;
+  padding: 8px;
   border: none;
   border-radius: 5px;
   background-color: #e74c3c;
@@ -238,24 +238,24 @@ body {
 }
 
 .clear-button-text {
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .fav-item-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 10px 0;
+  gap: 8px;
+  margin: 8px 0;
 }
 
 .fav-item {
   flex: 1;
-  font-size: 1em;
+  font-size: 0.9em;
   color: #444;
 }
 
 .remove-button {
-  padding: 5px 10px;
+  padding: 4px 8px;
   border: none;
   border-radius: 5px;
   background-color: #e74c3c;
@@ -264,52 +264,52 @@ body {
 }
 
 .remove-button-text {
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 .no-favorites {
-  font-size: 1em;
+  font-size: 0.9em;
   color: #666;
 }
 
 /* Affiliate Section */
 .affiliate-section {
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   margin: 20px 0;
   text-align: center;
 }
 
 .affiliate-header {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .affiliate-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
 }
 
 .affiliate-button {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: white;
   text-decoration: none;
   color: #333;
-  font-size: 0.9em;
-  max-width: 200px;
+  font-size: 0.8em;
+  max-width: 180px;
 }
 
 .affiliate-image {
   width: 50px;
   height: 50px;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .affiliate-text {
@@ -317,15 +317,15 @@ body {
 }
 
 .affiliate-disclaimer {
-  font-size: 0.8em;
+  font-size: 0.7em;
   color: #666;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 /* Footer */
 .footer {
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   margin: 20px 0;
   text-align: center;
 }
@@ -334,25 +334,25 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
-.footer-logo {
-  width: 50px;
-  height: 50px;
+.footer-logo, .footer-fallback {
+  width: 40px;
+  height: 40px;
 }
 
 .footer-links {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .footer-link {
   color: #3498db;
   text-decoration: none;
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 .footer-link:hover {
@@ -360,7 +360,7 @@ body {
 }
 
 .footer-contact, .footer-donation, .footer-copyright {
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #666;
 }
 
@@ -371,11 +371,6 @@ body {
 
 .footer-email:hover {
   text-decoration: underline;
-}
-
-.footer-fallback {
-  width: 50px;
-  height: 50px;
 }
 
 /* Modal */
@@ -393,36 +388,36 @@ body {
 
 .welcome-content {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 15px;
+  border-radius: 8px;
   text-align: center;
-  max-width: 400px;
+  max-width: 300px;
 }
 
 .modal-image {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 8px;
 }
 
 .modal-text {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: #333;
 }
 
 .modal-sub-text {
-  font-size: 1em;
+  font-size: 0.9em;
   color: #666;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .welcome-button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   background-color: #3498db;
   color: white;
-  font-size: 1em;
+  font-size: 0.9em;
   cursor: pointer;
 }
 
@@ -431,7 +426,7 @@ body {
 }
 
 .modal-button-text {
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 /* Dark Theme */

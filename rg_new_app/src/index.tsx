@@ -231,35 +231,40 @@ export default function HomeScreen() {
     let difficulty = 'Unknown';
     let servings = 1;
     const tips: string[] = [];
+    let chaos_gear = '';
 
     let currentSection: string | null = null;
 
     for (const line of lines) {
-      if (line.startsWith('# ')) {
-        title = line.replace(/^#+\s*/, '').trim();
-      } else if (line.startsWith('## Ingredients') || line.startsWith('### Ingredients')) {
+      // Handle title with varying markdown levels (#, ##, ###)
+      if (line.match(/^#+/)) {
+        const titleMatch = line.match(/^#+ (.*)/);
+        if (titleMatch) {
+          title = titleMatch[1].replace(/\*\*/g, '').trim();
+        }
+      } else if (line.match(/^(##+|###+) Ingredients/)) {
         currentSection = 'ingredients';
-      } else if (line.startsWith('## Steps') || line.startsWith('### Steps')) {
+      } else if (line.match(/^(##+|###+) (Steps|Instructions)/)) {
         currentSection = 'steps';
-      } else if (line.startsWith('## Nutrition') || line.startsWith('### Nutrition')) {
+      } else if (line.match(/^(##+|###+) Nutrition/)) {
         currentSection = 'nutrition';
-      } else if (line.startsWith('## Equipment') || line.startsWith('### Equipment')) {
+      } else if (line.match(/^(##+|###+) Equipment/)) {
         currentSection = 'equipment';
-      } else if (line.startsWith('## Tip') || line.startsWith('### Tip')) {
+      } else if (line.match(/^(##+|###+) Tip/)) {
         currentSection = 'tips';
-      } else if (line.startsWith('**Cooking Time:**') || line.startsWith('### Cooking Time:')) {
+      } else if (line.match(/^(?:\*\*|##+|###) ?Cooking Time:/)) {
         const match = line.match(/\d+/);
         cooking_time = match ? parseInt(match[0]) : 0;
-      } else if (line.startsWith('**Difficulty:**') || line.startsWith('### Difficulty:')) {
+      } else if (line.match(/^(?:\*\*|##+|###) ?Difficulty:/)) {
         difficulty = line.replace(/.*?:\s*/, '').trim();
-      } else if (line.startsWith('**Servings:**') || line.startsWith('### Servings:')) {
+      } else if (line.match(/^(?:\*\*|##+|###) ?Servings:/)) {
         const match = line.match(/\d+/);
         servings = match ? parseInt(match[0]) : 1;
-      } else if (currentSection === 'ingredients' && line.startsWith('- ')) {
-        ingredients.push(line.replace(/^-+\s*/, '').trim());
-      } else if (currentSection === 'steps' && /^\d+\.\s*/.test(line)) {
+      } else if (currentSection === 'ingredients' && line.match(/^- /)) {
+        ingredients.push(line.replace(/^-+\s*/, '').replace(/\*\*/g, '').trim());
+      } else if (currentSection === 'steps' && line.match(/^\d+\.\s*/)) {
         steps.push(line.replace(/^\d+\.\s*/, '').trim());
-      } else if (currentSection === 'nutrition') {
+      } else if (currentSection === 'nutrition' && line.match(/^- /)) {
         if (line.includes('Calories:')) {
           const match = line.match(/(\d+)/);
           nutrition.calories = match ? parseInt(match[0]) : 0;
@@ -273,8 +278,12 @@ export default function HomeScreen() {
           const match = line.match(/(\d+)/);
           nutrition.chaos_factor = match ? parseInt(match[0]) : 0;
         }
-      } else if (currentSection === 'equipment' && line.startsWith('- ')) {
-        equipment.push(line.replace(/^-+\s*/, '').trim());
+      } else if (currentSection === 'equipment' && line.match(/^- /)) {
+        const equip = line.replace(/^-+\s*/, '').trim();
+        equipment.push(equip);
+        if (equip.toLowerCase().includes('chaos')) {
+          chaos_gear = equip;
+        }
       } else if (currentSection === 'tips' && line.trim()) {
         tips.push(line.trim());
       }
@@ -290,7 +299,7 @@ export default function HomeScreen() {
       difficulty,
       servings,
       tips,
-      chaos_gear: equipment.find(item => item.toLowerCase().includes('chaos')) || '',
+      chaos_gear,
       shareText: text,
     };
   };
@@ -565,11 +574,11 @@ export default function HomeScreen() {
           onClick={() => toggleCategory(category)}
           aria-label={`Toggle ${label} category`}
         >
-          <span>${label}</span>
+          <span>{label}</span>
           <svg
             className="toggle-arrow"
-            width="24"
-            height="24"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="#FFD700"
@@ -589,7 +598,7 @@ export default function HomeScreen() {
             <option value="">None</option>
             {INGREDIENT_CATEGORIES[category].map((item) => (
               <option key={item.name} value={item.name}>
-                ${item.name} ${item.emoji}
+                {item.name} {item.emoji}
               </option>
             ))}
           </select>
@@ -635,7 +644,7 @@ export default function HomeScreen() {
                 onKeyDown={(e) => e.key === 'Enter' && setSelectedFavorite(item)}
                 aria-label={`View ${item.title || 'recipe'}`}
               >
-                <p className="fav-item">🌟 ${item.title || 'Unknown Recipe'} ${item.rating ? `(${item.rating} ★)` : ''}</p>
+                <p className="fav-item">🌟 {item.title || 'Unknown Recipe'} {item.rating ? `(${item.rating} ★)` : ''}</p>
               </div>
               <motion.button
                 className="remove-button"
@@ -678,7 +687,7 @@ export default function HomeScreen() {
                 e.currentTarget.src = '/assets/fallback.png';
               }}
             />
-            <span className="affiliate-text">${link.title}</span>
+            <span className="affiliate-text">{link.title}</span>
           </motion.a>
         ))}
       </div>
@@ -737,7 +746,7 @@ export default function HomeScreen() {
           animate={{ opacity: 1 }}
           className="recipe-title"
         >
-          ${recipe.title || 'No Title'}
+          {recipe.title || 'No Title'}
         </motion.h2>
       )}
       {recipe.ingredients && (
@@ -751,7 +760,7 @@ export default function HomeScreen() {
             const link = recipe.ingredients_with_links?.find((link: IngredientLink) => link.name === (typeof ing === 'string' ? ing : Array.isArray(ing) ? ing[0] : ing.name));
             return (
               <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
-                <p className="recipe-item">- ${displayText}</p>
+                <p className="recipe-item">- {displayText}</p>
                 {link && (
                   <a
                     href={link.url}
@@ -776,7 +785,7 @@ export default function HomeScreen() {
             const displayStep = typeof step === 'string' ? step : step.step;
             return (
               <p key={i} className="recipe-item">
-                ${i + 1}. ${displayStep}
+                {i + 1}. {displayStep}
               </p>
             );
           })}
@@ -787,17 +796,17 @@ export default function HomeScreen() {
           <p className="recipe-section">Details:</p>
           {recipe.nutrition && (
             <p className="recipe-item">
-              Calories: ${recipe.nutrition.calories || 0} | Protein: ${recipe.nutrition.protein || 0}g | Fat: ${recipe.nutrition.fat || 0}g | Chaos: ${recipe.nutrition.chaos_factor || 0}/10
+              Calories: {recipe.nutrition.calories || 0} | Protein: {recipe.nutrition.protein || 0}g | Fat: {recipe.nutrition.fat || 0}g | Chaos: {recipe.nutrition.chaos_factor || 0}/10
             </p>
           )}
           {recipe.cooking_time && (
-            <p className="recipe-item">Cooking Time: ${recipe.cooking_time} minutes</p>
+            <p className="recipe-item">Cooking Time: {recipe.cooking_time} minutes</p>
           )}
           {recipe.difficulty && (
-            <p className="recipe-item">Difficulty: ${recipe.difficulty}</p>
+            <p className="recipe-item">Difficulty: {recipe.difficulty}</p>
           )}
           {recipe.servings && (
-            <p className="recipe-item">Servings: ${recipe.servings}</p>
+            <p className="recipe-item">Servings: {recipe.servings}</p>
           )}
         </motion.div>
       )}
@@ -805,7 +814,7 @@ export default function HomeScreen() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <p className="recipe-section">Gear:</p>
           <p className="recipe-item">
-            ${(recipe.equipment || []).join(', ') || 'None'}${recipe.chaos_gear ? `, Chaos Gear: ${recipe.chaos_gear} 🪓` : ''}
+            {(recipe.equipment || []).join(', ') || 'None'}{recipe.chaos_gear ? `, Chaos Gear: ${recipe.chaos_gear} 🪓` : ''}
           </p>
         </motion.div>
       )}
@@ -821,7 +830,7 @@ export default function HomeScreen() {
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Enter' && copyToClipboard()}
         >
-          <span className="copy-button-text">${copied ? 'Snagged It! 🎯' : 'Copy to Clipboard 📋'}</span>
+          <span className="copy-button-text">{copied ? 'Snagged It! 🎯' : 'Copy to Clipboard 📋'}</span>
         </motion.button>
         <motion.button
           className="action-button twitter-share"
@@ -921,7 +930,7 @@ export default function HomeScreen() {
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && toggleTheme()}
           >
-            <span className="copy-button-text">${theme === 'light' ? '🌙 Moonshine Mode' : '🌞 Daylight Chaos'}</span>
+            <span className="copy-button-text">{theme === 'light' ? '🌙 Moonshine Mode' : '🌞 Daylight Chaos'}</span>
           </motion.button>
           <div className="promo-container">
             <p className="promo-text">🍳 Pick ingredients from the categories below to create a recipe!</p>
@@ -997,7 +1006,7 @@ export default function HomeScreen() {
               animate={{ opacity: 1 }}
               className="error-container"
             >
-              <p className="error">💥 Dang it! ${error} 🤦‍♂️</p>
+              <p className="error">💥 Dang it! {error} 🤦‍♂️</p>
               <motion.button
                 className="action-button clear-error"
                 onClick={() => setError(null)}
@@ -1065,7 +1074,7 @@ export default function HomeScreen() {
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && toggleFavorites()}
             >
-              <span className="copy-button-text">${showFavorites ? '🙈 Hide My Stash' : '💰 Show My Stash'}</span>
+              <span className="copy-button-text">{showFavorites ? '🙈 Hide My Stash' : '💰 Show My Stash'}</span>
             </motion.button>
           </motion.div>
           {recipe && recipe.title !== 'Error' && !selectedFavorite && (
@@ -1077,7 +1086,7 @@ export default function HomeScreen() {
               animate={{ opacity: 1 }}
               className="error-container"
             >
-              <p className="error">💥 Dang it! ${(recipe.steps && recipe.steps[0] ? (typeof recipe.steps[0] === 'string' ? recipe.steps[0] : recipe.steps[0].step) : 'Unknown error')} 🤦‍♂️</p>
+              <p className="error">💥 Dang it! {(recipe.steps && recipe.steps[0] ? (typeof recipe.steps[0] === 'string' ? recipe.steps[0] : recipe.steps[0].step) : 'Unknown error')} 🤦‍♂️</p>
               <motion.button
                 className="action-button retry-recipe"
                 onClick={() => fetchRecipe(lastRandom)}
@@ -1126,12 +1135,15 @@ export default function HomeScreen() {
           <AffiliateSection />
           <footer className="footer">
             <div className="footer-content">
-              <img src="/assets/gt.png" alt="Logo" className="footer-logo" />
+              <img src="/assets/gt.png" alt="Game Theory Logo" className="footer-logo" />
               <div className="footer-links">
+                <p className="footer-link">Check out apps by <a href="https://gametheory.ai" target="_blank" rel="noopener noreferrer">Game Theory 🎮</a></p>
+                <p className="footer-link"><a href="https://barlitosbazaar.onrender.com" target="_blank" rel="noopener noreferrer">Barlito's Bazaar 🛒</a></p>
+                <p className="footer-link"><a href="https://miami-pickup-basketball.onrender.com" target="_blank" rel="noopener noreferrer">Miami Pickup Basketball 🏀</a></p>
+                <p className="footer-link">Sponsor and advertise on Chuckle and Chow - email <a href="mailto:bshoemak@mac.com">bshoemak@mac.com 📧</a></p>
                 <Link to="/privacy-policy" className="footer-link">Privacy Policy 🕵️‍♂️</Link>
                 <p className="footer-contact">
-                  Got issues? Holler at{' '}
-                  <a href="mailto:bshoemak@mac.com" className="footer-email">bshoemak@mac.com 📧</a>
+                  Got issues? Holler at <a href="mailto:bshoemak@mac.com" className="footer-email">bshoemak@mac.com 📧</a>
                 </p>
                 <p className="footer-donation">
                   To help pay for xAi recipes donate bucks or sweet gold nuggets to bshoemak@mac.com via Zelle, Apple Pay, or CashApp ($barlitorobusto). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking at...just ask via email.
