@@ -7,7 +7,7 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: 'build', // Match Render's expected output directory
-    assetsDir: 'static', // Place assets in build/static
+    outDir: 'dist',
+    assetsDir: 'assets',
   },
 });

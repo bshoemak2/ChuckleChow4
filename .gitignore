@@ -1,22 +1,43 @@
-# Python 
-venv/ 
-__pycache__/ 
-*.pyc 
-*.pyo 
-*.pyd 
-*.db 
-*.sqlite3 
-# Node.js 
-node_modules/ 
-dist/ 
-.env 
-# Logs 
-recipe_generator.log 
-# Build artifacts 
-web-build/ 
-src/index_sav04192025.tsx.bak 
-tsconfig.node.tsbuildinfo 
-tsconfig.tsbuildinfo 
-# Local files 
-notes.docx 
-public/favicon.ico 
+# Sensitive files
+.env
+grok_ai_api_keys.docx
+monetize_captcha_notes.docx
+notes.docx
+
+# Backups
+*.bak
+*.bak2
+requirements.txt.bak
+temp_requirements.txt
+app.py.bak
+vite.config.ts.bak
+src/index_sav04192025.tsx.bak
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.Python
+env/
+venv/
+ENV/
+
+# Node modules
+rg_new_app/node_modules/
+rg_new_app/.vite/
+rg_new_app/tsconfig.tsbuildinfo
+rg_new_app/tsconfig.node.tsbuildinfo
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+app.log
+recipe_generator.log
+
+# Build artifacts (exclude specific build outputs if needed)
+web-build/
