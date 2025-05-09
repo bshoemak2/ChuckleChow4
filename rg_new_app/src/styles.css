@@ -2,14 +2,16 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  background-color: #FFF8E1;
+  color: #333;
 }
 
 .main-container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .content-container {
@@ -25,42 +27,47 @@ body {
 }
 
 .header {
-  font-size: 2em;
-  color: #333;
+  font-size: 2.5em;
+  color: #D81B60;
+  text-shadow: 2px 2px #FFD700;
 }
 
 .subheader {
-  font-size: 1.1em;
-  color: #666;
+  font-size: 1.2em;
+  color: #F06292;
 }
 
 /* Promo Container */
 .promo-container {
   text-align: center;
   margin-bottom: 20px;
+  background-color: #FFECB3;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .promo-text {
-  font-size: 1em;
-  color: #444;
+  font-size: 1.1em;
+  color: #E65100;
   margin: 5px 0;
 }
 
 /* Input Section */
 .input-section {
-  margin: 10px 0;
+  margin: 15px 0;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .input-label {
-  padding: 8px;
-  color: white;
+  padding: 10px;
+  color: #FFF;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 8px 8px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-arrow {
@@ -70,12 +77,12 @@ body {
 
 .picker {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+  padding: 10px;
   border: none;
-  border-radius: 5px;
-  font-size: 0.9em;
-  color: white;
+  border-radius: 0 0 8px 8px;
+  font-size: 1em;
+  color: #FFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Spinner */
@@ -85,11 +92,11 @@ body {
 }
 
 .spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  border: 6px solid #FFECB3;
+  border-top: 6px solid #FF5722;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
@@ -101,19 +108,22 @@ body {
 
 .spinner-text {
   margin-top: 10px;
-  font-size: 1em;
-  color: #444;
+  font-size: 1.2em;
+  color: #E65100;
 }
 
 /* Error Container */
 .error-container {
   text-align: center;
   margin: 20px 0;
+  background-color: #FFCDD2;
+  padding: 15px;
+  border-radius: 8px;
 }
 
 .error {
-  color: #e74c3c;
-  font-size: 1.1em;
+  color: #D32F2F;
+  font-size: 1.2em;
 }
 
 /* Button Row */
@@ -121,251 +131,289 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   margin: 20px 0;
 }
 
 .action-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #3498db;
-  color: white;
-  font-size: 0.9em;
+  padding: 10px 20px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  background-color: #FF5722;
+  color: #FFF;
+  font-size: 1em;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .action-button:hover {
-  background-color: #2980b9;
+  background-color: #F4511E;
 }
 
 .random-recipe {
-  background-color: #e67e22;
+  background-color: #AB47BC;
 }
 
 .random-recipe:hover {
-  background-color: #d35400;
+  background-color: #8E24AA;
 }
 
 .clear-inputs {
-  background-color: #e74c3c;
+  background-color: #EF5350;
 }
 
 .clear-inputs:hover {
-  background-color: #c0392b;
+  background-color: #D32F2F;
 }
 
 .theme-toggle {
-  background-color: #2ecc71;
+  background-color: #4CAF50;
 }
 
 .theme-toggle:hover {
-  background-color: #27ae60;
+  background-color: #388E3C;
 }
 
 .copied {
-  background-color: #27ae60;
+  background-color: #388E3C;
 }
 
 /* Recipe Card */
 .recipe-card {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #FFF;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 20px 0;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  border: 3px solid #FFD700;
 }
 
 .recipe-title {
-  font-size: 1.5em;
-  color: #333;
+  font-size: 1.8em;
+  color: #D81B60;
+  text-shadow: 1px 1px #FFECB3;
 }
 
 .recipe-section {
-  font-size: 1.1em;
-  color: #444;
-  margin: 8px 0 4px;
+  font-size: 1.2em;
+  color: #F06292;
+  margin: 10px 0 5px;
 }
 
 .recipe-item {
-  font-size: 0.9em;
-  color: #666;
-  margin: 4px 0;
+  font-size: 1em;
+  color: #E65100;
+  margin: 5px 0;
 }
 
 .recipe-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 15px;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 /* Favorites */
 .favorites {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   margin: 20px 0;
+  background-color: #FFECB3;
+  padding: 15px;
+  border-radius: 12px;
 }
 
 .subtitle {
-  font-size: 1.3em;
-  color: #333;
+  font-size: 1.5em;
+  color: #D81B60;
+  text-shadow: 1px 1px #FFD700;
 }
 
 .search-row {
   display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .input {
   flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 0.9em;
+  padding: 10px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: #FFF;
 }
 
 .clear-button {
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  background-color: #e74c3c;
-  color: white;
+  padding: 10px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  background-color: #EF5350;
+  color: #FFF;
   cursor: pointer;
 }
 
 .clear-button-text {
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .fav-item-container {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 8px 0;
+  gap: 10px;
+  margin: 10px 0;
 }
 
 .fav-item {
   flex: 1;
-  font-size: 0.9em;
-  color: #444;
+  font-size: 1em;
+  color: #E65100;
 }
 
 .remove-button {
-  padding: 4px 8px;
-  border: none;
-  border-radius: 5px;
-  background-color: #e74c3c;
-  color: white;
+  padding: 6px 12px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  background-color: #EF5350;
+  color: #FFF;
   cursor: pointer;
 }
 
 .remove-button-text {
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 
 .no-favorites {
-  font-size: 0.9em;
-  color: #666;
+  font-size: 1em;
+  color: #F06292;
 }
 
 /* Affiliate Section */
 .affiliate-section {
   width: 100%;
-  max-width: 400px;
-  margin: 20px 0;
+  margin: 30px 0;
   text-align: center;
+  background-color: #FFECB3;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .affiliate-header {
-  font-size: 1.3em;
-  color: #333;
-  margin-bottom: 8px;
+  font-size: 1.8em;
+  color: #D81B60;
+  text-shadow: 1px 1px #FFD700;
+  margin-bottom: 10px;
 }
 
 .affiliate-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  justify-items: center;
 }
 
 .affiliate-button {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
+  padding: 15px;
+  border: 3px solid #FFD700;
+  border-radius: 12px;
+  background-color: #FFF;
   text-decoration: none;
-  color: #333;
-  font-size: 0.8em;
-  max-width: 180px;
+  color: #E65100;
+  font-size: 0.9em;
+  max-width: 220px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .affiliate-image {
-  width: 50px;
-  height: 50px;
-  margin-right: 8px;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 
 .affiliate-text {
-  flex: 1;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #D81B60;
+}
+
+.affiliate-funny {
+  font-size: 0.8em;
+  color: #F06292;
+  text-align: center;
 }
 
 .affiliate-disclaimer {
-  font-size: 0.7em;
-  color: #666;
-  margin-top: 8px;
+  font-size: 0.8em;
+  color: #E65100;
+  margin-top: 15px;
+}
+
+/* Donation Text */
+.donation-text {
+  font-size: 0.9em;
+  color: #F06292;
+  text-align: center;
+  margin: 20px 0;
+  max-width: 500px;
+  background-color: #FFECB3;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
 .footer {
   width: 100%;
-  max-width: 400px;
-  margin: 20px 0;
+  margin: 30px 0;
   text-align: center;
+  background-color: #FFECB3;
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .footer-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .footer-logo, .footer-fallback {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 
 .footer-links {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .footer-link {
-  color: #3498db;
+  color: #FF5722;
   text-decoration: none;
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 
 .footer-link:hover {
   text-decoration: underline;
 }
 
-.footer-contact, .footer-donation, .footer-copyright {
-  font-size: 0.8em;
-  color: #666;
+.footer-contact, .footer-copyright {
+  font-size: 0.9em;
+  color: #F06292;
 }
 
 .footer-email {
-  color: #3498db;
+  color: #FF5722;
   text-decoration: none;
 }
 
@@ -380,97 +428,103 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .welcome-content {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
+  background-color: #FFF;
+  padding: 20px;
+  border-radius: 12px;
   text-align: center;
-  max-width: 300px;
+  max-width: 350px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 3px solid #FFD700;
 }
 
 .modal-image {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 8px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
 }
 
 .modal-text {
-  font-size: 1.3em;
-  color: #333;
+  font-size: 1.5em;
+  color: #D81B60;
 }
 
 .modal-sub-text {
-  font-size: 0.9em;
-  color: #666;
-  margin: 8px 0;
+  font-size: 1em;
+  color: #F06292;
+  margin: 10px 0;
 }
 
 .welcome-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #3498db;
-  color: white;
-  font-size: 0.9em;
+  padding: 10px 20px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  background-color: #FF5722;
+  color: #FFF;
+  font-size: 1em;
   cursor: pointer;
 }
 
 .welcome-button:hover {
-  background-color: #2980b9;
+  background-color: #F4511E;
 }
 
 .modal-button-text {
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 /* Dark Theme */
 .dark-theme {
-  background-color: #333;
-  color: #f5f5f5;
+  background-color: #212121;
+  color: #FFF;
 }
 
-.dark-theme .header, .dark-theme .subheader, .dark-theme .promo-text, .dark-theme .recipe-title, .dark-theme .recipe-section, .dark-theme .recipe-item, .dark-theme .affiliate-header, .dark-theme .affiliate-text, .dark-theme .footer-contact, .dark-theme .footer-donation, .dark-theme .footer-copyright {
-  color: #f5f5f5;
+.dark-theme .header, .dark-theme .subheader, .dark-theme .promo-text, .dark-theme .recipe-title, .dark-theme .recipe-section, .dark-theme .recipe-item, .dark-theme .affiliate-header, .dark-theme .affiliate-text, .dark-theme .footer-contact, .dark-theme .footer-copyright {
+  color: #FFF;
+}
+
+.dark-theme .promo-container, .dark-theme .favorites, .dark-theme .affiliate-section, .dark-theme .donation-text, .dark-theme .footer {
+  background-color: #424242;
 }
 
 .dark-theme .recipe-card, .dark-theme .welcome-content {
-  background-color: #444;
+  background-color: #616161;
 }
 
 .dark-theme .action-button, .dark-theme .welcome-button {
-  background-color: #2980b9;
+  background-color: #F4511E;
 }
 
 .dark-theme .action-button:hover, .dark-theme .welcome-button:hover {
-  background-color: #3498db;
+  background-color: #FF5722;
 }
 
 .dark-theme .random-recipe {
-  background-color: #d35400;
+  background-color: #8E24AA;
 }
 
 .dark-theme .random-recipe:hover {
-  background-color: #e67e22;
+  background-color: #AB47BC;
 }
 
 .dark-theme .clear-inputs {
-  background-color: #c0392b;
+  background-color: #D32F2F;
 }
 
 .dark-theme .clear-inputs:hover {
-  background-color: #e74c3c;
+  background-color: #EF5350;
 }
 
 .dark-theme .theme-toggle {
-  background-color: #27ae60;
+  background-color: #388E3C;
 }
 
 .dark-theme .theme-toggle:hover {
-  background-color: #2ecc71;
+  background-color: #4CAF50;
 }

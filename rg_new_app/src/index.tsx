@@ -161,65 +161,76 @@ export default function HomeScreen() {
       title: '🍔 Bubba’s Burger Smasher 🍔',
       url: 'https://amzn.to/4jwsA8w',
       image: 'https://m.media-amazon.com/images/I/61msHBPisBL._AC_SX425_.jpg',
+      funnyText: 'Y’all, this ain’t just a burger smasher, it’s a patty-poundin’ legend! Flatten ground beef faster than a possum dodgin’ a pickup on a backroad. Built tough for redneck cookouts, this heavy-duty smasher makes juicy, diner-style burgers that’ll have your kin hollerin’ for seconds. Snag it and smash your way to BBQ glory!'
     },
     {
       title: '🥃 Hillbilly Moonshine Maker 🥃',
       url: 'https://amzn.to/4lwVxmw',
       image: 'https://m.media-amazon.com/images/I/418WMdO5DQS._AC_US100_.jpg',
+      funnyText: 'Craft your own backwoods brew with this kit! It’s so good, you’ll be sippin’ like a true hillbilly while dodgin’ the revenuers. Perfect for when you wanna turn corn into somethin’ magical—get it before the law does!'
     },
     {
       title: '🔪 Granny’s Hog-Slicin’ Knife 🔪',
       url: 'https://amzn.to/4lp4j5M',
       image: 'https://m.media-amazon.com/images/I/61p28HGfcGL._AC_SY450_.jpg',
+      funnyText: 'This blade’s sharper than Granny’s tongue and cuts hog like butter! Turn that piggy into bacon faster than you can say “Yeehaw!”—a must-have for any Southern kitchen warrior.'
     },
     {
       title: '🍺 Redneck Beer Pong Kit 🍺',
       url: 'https://amzn.to/42re7n7',
       image: 'https://m.media-amazon.com/images/I/81ZrDViTBTL._AC_SY355_.jpg',
+      funnyText: 'Take your family reunion to the next level with this beer pong kit! Even Cousin Cletus can’t mess it up—perfect for backyard brawls and trailer park showdowns. Grab it and pong like a pro!'
     },
     {
       title: '🐔 Cletus’s Chicken Tickler Whisk 🐔',
       url: 'https://amzn.to/4j9uqMG',
       image: 'https://m.media-amazon.com/images/I/41ccOMyTYLL._AC_SX425_.jpg',
+      funnyText: 'This whisk’ll tickle your chicken into submission before it hits the grill! Cletus swears by it, and if it’s good enough for him, it’s darn sure good enough for your kitchen shenanigans!'
     },
     {
       title: '🥚 Possum’s Egg-Splodin’ Separator 🥚',
       url: 'https://amzn.to/3EiOrkG',
       image: 'https://m.media-amazon.com/images/I/61DHEfEI1TL._AC_SX425_.jpg',
+      funnyText: 'Separate eggs quicker than a possum dodgin’ a porch light! This slick gadget turns breakfast prep into a NASCAR pit stop—yeehaw, your mornin’ just got a whole lot tastier!'
     },
     {
       title: '🥓 Hog Holler Bacon Gripper Tongs 🥓',
       url: 'https://amzn.to/4jhJ8kA',
       image: 'https://m.media-amazon.com/images/I/71jIBCjXMPL._AC_SX425_.jpg',
+      funnyText: 'These tongs grab bacon tighter than a coonhound on a squirrel! Flip that greasy goodness without losin’ a strip—unless you’re sneakin’ some to the dog. Get ‘em now!'
     },
     {
       title: '🌽 Moonshine Mason Jar Measuring Cups 🌽',
       url: 'https://amzn.to/44tvYwi',
       image: 'https://m.media-amazon.com/images/I/51QJ8JIQCaL._AC_SY606_.jpg',
+      funnyText: 'Measure like a moonshiner with these mason jar cups! Perfect for cookin’ up somethin’ special or mixin’ a batch of your finest brew—y’all need this in your kitchen arsenal!'
     },
     {
       title: '🔥 Gator’s Grill Scorchin’ Mitt 🔥',
       url: 'https://amzn.to/4lsnUCh',
       image: 'https://m.media-amazon.com/images/I/81Q8RGATIHL._AC_SX425_.jpg',
+      funnyText: 'Tougher than a gator’s hide, this mitt handles grills hotter than a swamp in July! Grab skillets or ovens without burnin’ your paws—essential for any BBQ brawler!'
     },
     {
       title: '🍔 Squirrel’s Nutty Pancake Flipper 🍔',
       url: 'https://amzn.to/3RJ4U4K',
       image: 'https://m.media-amazon.com/images/I/71AicV-umtL._AC_SX425_.jpg',
+      funnyText: 'Flip flapjacks like a squirrel dodgin’ traffic! This nimble flipper sends pancakes flyin’ higher than a redneck on a trampoline—breakfast just got nuttier, y’all!'
     },
     {
       title: '🐷 Caja China Pig Roasting Box 🐷',
       url: 'https://amzn.to/4cz2GP4',
       image: 'https://m.media-amazon.com/images/I/61eD3oq2XXL._AC_SX425_.jpg',
+      funnyText: 'Roast a whole hog like a Southern pitmaster! This box cooks pig so good, the neighbors’ll sniff the air like hound dogs. Feed the whole trailer park—get it now!'
     },
     {
       title: '🍳 Hillbilly Cast Iron Skillet 🍳',
       url: 'https://amzn.to/42H0vp9',
       image: 'https://m.media-amazon.com/images/I/81lU5G0EU-L._AC_SX425_.jpg',
+      funnyText: 'Tougher than a two-dollar steak, this skillet’s seasoned like Granny’s secrets! Fry, bake, or whack a critter—y’all ain’t livin’ till you’ve cooked with this bad boy!'
     },
   ];
 
-  // Parse markdown text into structured recipe
   const parseRecipeText = (text: string): Recipe => {
     const lines = text.split('\n').filter(line => line.trim());
     let title = 'Untitled Recipe';
@@ -236,12 +247,9 @@ export default function HomeScreen() {
     let currentSection: string | null = null;
 
     for (const line of lines) {
-      // Handle title with varying markdown levels (#, ##, ###) or "Title:" prefix
       if (line.match(/^#+/) || line.match(/^Title:/i)) {
         const titleMatch = line.match(/^#+ (.*)/) || line.match(/^Title: (.*)/i);
-        if (titleMatch) {
-          title = titleMatch[1].replace(/[\*_\[\]]/g, '').trim();
-        }
+        if (titleMatch) title = titleMatch[1].replace(/[\*_\[\]]/g, '').trim();
       } else if (line.match(/^(##+|###+) Ingredients/i)) {
         currentSection = 'ingredients';
       } else if (line.match(/^(##+|###+) (Steps|Instructions)/i)) {
@@ -265,43 +273,20 @@ export default function HomeScreen() {
       } else if (currentSection === 'steps' && line.match(/^\d+\.\s*/)) {
         steps.push(line.replace(/^\d+\.\s*/, '').replace(/[\*_]/g, '').trim());
       } else if (currentSection === 'nutrition' && line.match(/^- /)) {
-        if (line.includes('Calories:')) {
-          const match = line.match(/(\d+)/);
-          nutrition.calories = match ? parseInt(match[0]) : 0;
-        } else if (line.includes('Protein:')) {
-          const match = line.match(/(\d+)/);
-          nutrition.protein = match ? parseInt(match[0]) : 0;
-        } else if (line.includes('Fat:')) {
-          const match = line.match(/(\d+)/);
-          nutrition.fat = match ? parseInt(match[0]) : 0;
-        } else if (line.includes('Chaos Factor:')) {
-          const match = line.match(/(\d+)/);
-          nutrition.chaos_factor = match ? parseInt(match[0]) : 0;
-        }
+        if (line.includes('Calories:')) nutrition.calories = parseInt(line.match(/(\d+)/)?.[0] || '0');
+        else if (line.includes('Protein:')) nutrition.protein = parseInt(line.match(/(\d+)/)?.[0] || '0');
+        else if (line.includes('Fat:')) nutrition.fat = parseInt(line.match(/(\d+)/)?.[0] || '0');
+        else if (line.includes('Chaos Factor:')) nutrition.chaos_factor = parseInt(line.match(/(\d+)/)?.[0] || '0');
       } else if (currentSection === 'equipment' && line.match(/^- /)) {
         const equip = line.replace(/^-+\s*/, '').replace(/[\*_]/g, '').trim();
         equipment.push(equip);
-        if (equip.toLowerCase().includes('chaos')) {
-          chaos_gear = equip;
-        }
+        if (equip.toLowerCase().includes('chaos')) chaos_gear = equip;
       } else if (currentSection === 'tips' && line.trim() && !line.match(/^#/)) {
         tips.push(line.replace(/[\*_]/g, '').trim());
       }
     }
 
-    return {
-      title,
-      ingredients,
-      steps,
-      nutrition,
-      equipment,
-      cooking_time,
-      difficulty,
-      servings,
-      tips,
-      chaos_gear,
-      shareText: text,
-    };
+    return { title, ingredients, steps, nutrition, equipment, cooking_time, difficulty, servings, tips, chaos_gear, shareText: text };
   };
 
   useEffect(() => {
@@ -373,7 +358,6 @@ export default function HomeScreen() {
     try {
       const data = await generateRecipe(selectedIngredients, isRandom);
       console.log('Fetched recipe:', JSON.stringify(data, null, 2));
-      // Parse markdown text if no structured fields
       if (data && data.text && !data.title) {
         const parsedRecipe = parseRecipeText(data.text);
         setRecipe(parsedRecipe);
@@ -579,7 +563,7 @@ export default function HomeScreen() {
             className="toggle-arrow"
             width="16"
             height="16"
-            viewBox="0 24 24 24"
+            viewBox="0 0 24 24"
             fill="none"
             stroke="#FFD700"
             strokeWidth="2"
@@ -668,6 +652,7 @@ export default function HomeScreen() {
   const AffiliateSection: React.FC = () => (
     <div className="affiliate-section">
       <p className="affiliate-header">💰 Git Yer Loot Here, Y’all! 💸</p>
+      <p className="affiliate-disclaimer">As an Amazon Associate, I earn from qualifyin’ purchases, yeehaw!</p>
       <div className="affiliate-links">
         {AFFILIATE_LINKS.map((link, index) => (
           <motion.a
@@ -679,21 +664,12 @@ export default function HomeScreen() {
             whileHover={{ scale: 1.05, rotate: 2 }}
             aria-label={`Visit affiliate link: ${link.title}`}
           >
-            <img
-              src={link.image}
-              alt={link.title}
-              className="affiliate-image"
-              onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                e.currentTarget.src = '/assets/fallback.png';
-              }}
-            />
+            <img src={link.image} alt={link.title} className="affiliate-image" />
             <span className="affiliate-text">{link.title}</span>
+            <p className="affiliate-funny">{link.funnyText}</p>
           </motion.a>
         ))}
       </div>
-      <p className="affiliate-disclaimer">
-        As an Amazon Associate, I earn from qualifyin’ purchases, yeehaw!
-      </p>
     </div>
   );
 
@@ -1078,7 +1054,12 @@ export default function HomeScreen() {
             </motion.button>
           </motion.div>
           {recipe && recipe.title !== 'Error' && !selectedFavorite && (
-            <RecipeCard recipe={recipe} onShare={shareRecipe} onSave={saveFavorite} onBack={undefined} />
+            <>
+              <RecipeCard recipe={recipe} onShare={shareRecipe} onSave={saveFavorite} onBack={undefined} />
+              <p className="donation-text">
+                To help pay for xAi recipes, donate bucks or sweet gold nuggets to bshoemak@mac.com via Zelle, Apple Pay, or CashApp ($barlitorobusto). We’ll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you’re tired of lookin’ at—just ask via email!
+              </p>
+            </>
           )}
           {recipe && recipe.title === 'Error' && (
             <motion.div
@@ -1144,9 +1125,6 @@ export default function HomeScreen() {
                 <Link to="/privacy-policy" className="footer-link">Privacy Policy 🕵️‍♂️</Link>
                 <p className="footer-contact">
                   Got issues? Holler at <a href="mailto:bshoemak@mac.com" className="footer-email">bshoemak@mac.com 📧</a>
-                </p>
-                <p className="footer-donation">
-                  To help pay for xAi recipes donate bucks or sweet gold nuggets to bshoemak@mac.com via Zelle, Apple Pay, or CashApp ($barlitorobusto). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking at...just ask via email.
                 </p>
                 <p className="footer-copyright">© 2025 Chuckle & Chow 🌟</p>
               </div>
