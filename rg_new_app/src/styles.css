@@ -148,6 +148,25 @@ body {
   background-color: #2C2C2C;
 }
 
+/* Toggle arrow for ingredient categories */
+.toggle-arrow {
+  margin-left: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  stroke: #FFD700;
+  stroke-width: 2;
+  width: 24px;
+  height: 24px;
+}
+
+.toggle-arrow:hover {
+  transform: scale(1.2);
+}
+
+.dark-theme .toggle-arrow {
+  stroke: #FFD700;
+}
+
 /* Buttons */
 .action-button {
   background: #FF69B4 !important;
