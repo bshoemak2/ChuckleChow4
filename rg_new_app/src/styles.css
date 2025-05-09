@@ -1,211 +1,285 @@
-/* General Styles */
+/* Import playful font */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+/* Base styles */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Comic Sans MS', 'Arial', sans-serif;
-  background-color: #FFF8E1;
-  color: #333;
+  background-color: #f0f0f0;
 }
 
+.dark-theme {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Container styles */
 .main-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+  background-size: cover;
 }
 
 .content-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Header */
+/* Header and subheader */
 .header-container {
   text-align: center;
   margin-bottom: 20px;
 }
 
 .header {
-  font-size: 2.5em;
-  color: #D81B60;
-  text-shadow: 2px 2px #FFD700;
+  font-family: 'Bangers', cursive;
+  font-size: 2.8em;
+  margin: 0;
+  color: #333;
+  text-shadow: 3px 3px #FFD700;
+}
+
+.dark-theme .header {
+  color: #fff;
+  text-shadow: 3px 3px #FF69B4;
 }
 
 .subheader {
-  font-size: 1.2em;
-  color: #F06292;
+  font-family: 'Bangers', cursive;
+  font-size: 1.6em;
+  margin: 10px 0;
+  color: #555;
+  text-align: center;
 }
 
-/* Promo Container */
+.dark-theme .subheader {
+  color: #ccc;
+}
+
+/* Promo container */
 .promo-container {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 20px;
-  background-color: #FFECB3;
-  padding: 10px;
-  border-radius: 8px;
 }
 
 .promo-text {
-  font-size: 1.1em;
-  color: #E65100;
-  margin: 5px 0;
+  font-size: 1em;
+  color: #666;
+  padding-left: 20px;
 }
 
-/* Input Section */
+.dark-theme .promo-text {
+  color: #aaa;
+}
+
+/* Input sections */
 .input-section {
-  margin: 15px 0;
-  width: 100%;
-  max-width: 500px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: transform 0.2s;
+}
+
+.input-section:hover {
+  transform: scale(1.02);
+}
+
+.input-section.meat {
+  background-color: #FF6347;
+}
+
+.input-section.vegetables {
+  background-color: #228B22;
+}
+
+.input-section.fruits {
+  background-color: #FFA500;
+}
+
+.input-section.seafood {
+  background-color: #1E90FF;
+}
+
+.input-section.dairy {
+  background-color: #FFFACD;
+}
+
+.input-section.carbs {
+  background-color: #8B4513;
+}
+
+.input-section.devilWater {
+  background-color: #800080;
 }
 
 .input-label {
-  padding: 10px;
-  color: #FFF;
-  font-weight: bold;
-  border-radius: 8px 8px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: #FFFFFF; /* Changed to white for better visibility */
 }
 
-.toggle-arrow {
-  width: 16px;
-  height: 16px;
+.dark-theme .input-label {
+  color: #FFFFFF;
 }
 
 .picker {
   width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 0 0 8px 8px;
+  padding: 8px;
   font-size: 1em;
-  color: #FFF;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Spinner */
-.spinner-container {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.spinner {
-  border: 6px solid #FFECB3;
-  border-top: 6px solid #FF5722;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.spinner-text {
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #E65100;
-}
-
-/* Error Container */
-.error-container {
-  text-align: center;
-  margin: 20px 0;
-  background-color: #FFCDD2;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.error {
-  color: #D32F2F;
-  font-size: 1.2em;
-}
-
-/* Button Row */
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.action-button {
-  padding: 10px 20px;
   border: 2px solid #FFD700;
-  border-radius: 8px;
-  background-color: #FF5722;
-  color: #FFF;
+  border-radius: 5px;
+  background-color: inherit;
+  color: #FFFFFF;
+}
+
+.picker option {
+  color: #000000;
+  background-color: #FFFFFF;
+}
+
+.dark-theme .picker option {
+  color: #FFFFFF;
+  background-color: #2C2C2C;
+}
+
+/* Buttons */
+.action-button {
+  background: #FF69B4 !important;
+  border: 2px solid #FFD700;
+  color: #fff;
+  padding: 10px 20px;
   font-size: 1em;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 5px;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .action-button:hover {
-  background-color: #F4511E;
+  background: #FF1493 !important;
+  transform: scale(1.1) rotate(2deg);
+  animation: wiggle 0.3s;
 }
 
-.random-recipe {
-  background-color: #AB47BC;
+.action-button:disabled {
+  background: #ccc !important;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.random-recipe:hover {
-  background-color: #8E24AA;
+.action-button.random-recipe {
+  background: #FF00A0 !important;
 }
 
-.clear-inputs {
-  background-color: #EF5350;
+.action-button.random-recipe:hover {
+  background: #C71585 !important;
 }
 
-.clear-inputs:hover {
-  background-color: #D32F2F;
+.action-button.theme-toggle {
+  background: #32CD32 !important;
 }
 
-.theme-toggle {
-  background-color: #4CAF50;
+.action-button.theme-toggle:hover {
+  background: #228B22 !important;
 }
 
-.theme-toggle:hover {
-  background-color: #388E3C;
+.action-button.surprise-me {
+  background: #FFD700 !important;
+  color: #000000;
+  text-shadow: 1px 1px #000000;
 }
 
-.copied {
-  background-color: #388E3C;
+.action-button.surprise-me:hover {
+  background: #FFA500 !important;
 }
 
-/* Recipe Card */
+.dark-theme .action-button.surprise-me {
+  color: #000000;
+  text-shadow: 1px 1px #000000;
+}
+
+.action-button.copied {
+  background: #00FF00 !important;
+}
+
+.action-button.twitter-share,
+.action-button.facebook-share,
+.action-button.share-default,
+.action-button.clear-error,
+.action-button.retry-recipe,
+.action-button.clear-inputs {
+  background: #FF69B4 !important;
+}
+
+.action-button.twitter-share:hover,
+.action-button.facebook-share:hover,
+.action-button.share-default:hover,
+.action-button.clear-error:hover,
+.action-button.retry-recipe:hover,
+.action-button.clear-inputs:hover {
+  background: #FF1493 !important;
+}
+
+/* Button row */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Recipe card */
 .recipe-card {
-  background-color: #FFF;
+  background-color: #fff;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin: 20px 0;
-  width: 100%;
-  max-width: 500px;
-  border: 3px solid #FFD700;
+  margin-bottom: 20px;
+}
+
+.dark-theme .recipe-card {
+  background-color: #444;
 }
 
 .recipe-title {
-  font-size: 1.8em;
-  color: #D81B60;
-  text-shadow: 1px 1px #FFECB3;
+  font-family: 'Bangers', cursive;
+  font-size: 2em;
+  margin: 0 0 10px;
+  color: #333;
+  text-shadow: 3px 3px #FFD700;
+}
+
+.dark-theme .recipe-title {
+  color: #fff;
+  text-shadow: 3px 3px #FF69B4;
 }
 
 .recipe-section {
   font-size: 1.2em;
-  color: #F06292;
-  margin: 10px 0 5px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+}
+
+.dark-theme .recipe-section {
+  color: #fff;
 }
 
 .recipe-item {
   font-size: 1em;
-  color: #E65100;
   margin: 5px 0;
+  color: #333;
+}
+
+.dark-theme .recipe-item {
+  color: #ccc;
 }
 
 .recipe-actions {
@@ -215,316 +289,495 @@ body {
   margin-top: 20px;
 }
 
-/* Favorites */
-.favorites {
-  width: 100%;
-  max-width: 500px;
-  margin: 20px 0;
-  background-color: #FFECB3;
-  padding: 15px;
-  border-radius: 12px;
-}
-
-.subtitle {
-  font-size: 1.5em;
-  color: #D81B60;
-  text-shadow: 1px 1px #FFD700;
-}
-
-.search-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.input {
-  flex: 1;
-  padding: 10px;
-  border: 2px solid #FFD700;
-  border-radius: 8px;
-  font-size: 1em;
-  background-color: #FFF;
-}
-
-.clear-button {
-  padding: 10px;
-  border: 2px solid #FFD700;
-  border-radius: 8px;
-  background-color: #EF5350;
-  color: #FFF;
-  cursor: pointer;
-}
-
-.clear-button-text {
-  font-size: 1em;
-}
-
-.fav-item-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.fav-item {
-  flex: 1;
-  font-size: 1em;
-  color: #E65100;
-}
-
-.remove-button {
-  padding: 6px 12px;
-  border: 2px solid #FFD700;
-  border-radius: 8px;
-  background-color: #EF5350;
-  color: #FFF;
-  cursor: pointer;
-}
-
-.remove-button-text {
-  font-size: 0.9em;
-}
-
-.no-favorites {
-  font-size: 1em;
-  color: #F06292;
-}
-
-/* Affiliate Section */
-.affiliate-section {
-  width: 100%;
-  margin: 30px 0;
+.chaos-meter {
+  margin-top: 10px;
   text-align: center;
-  background-color: #FFECB3;
+}
+
+.chaos-meter p {
+  font-size: 1em;
+  margin: 5px 0;
+  color: #333;
+}
+
+.dark-theme .chaos-meter p {
+  color: #ccc;
+}
+
+.chaos-bar {
+  height: 10px;
+  background: linear-gradient(to right, #FF4500, #FF69B4);
+  border-radius: 5px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes slide-in {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.5s ease-out;
+}
+
+/* Spinner */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #FF69B4;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-text {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #333;
+  font-family: 'Bangers', cursive;
+}
+
+.dark-theme .spinner-text {
+  color: #ccc;
+}
+
+/* Skeleton loading */
+.skeleton-box {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Error container */
+.error-container {
+  background-color: #FF6347;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.error {
+  font-size: 1.2em;
+  color: #fff;
+  margin: 0;
+  font-family: 'Bangers', cursive;
+}
+
+/* Donation section */
+.donation-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.donation-message {
+  font-family: 'Bangers', cursive;
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: #000000;
+  background-color: #FFD700;
+  padding: 15px;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  text-shadow: 1px 1px #000000;
+  transition: transform 0.2s;
+}
+
+.donation-message:hover {
+  transform: scale(1.05);
+}
+
+.dark-theme .donation-message {
+  color: #000000;
+  text-shadow: 1px 1px #000000;
+}
+
+.donation-email {
+  color: #0000FF;
+  text-decoration: underline;
+}
+
+.donation-email:hover {
+  color: #FF0000;
+}
+
+/* Affiliate section */
+.affiliate-section {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
 }
 
 .affiliate-header {
-  font-size: 1.8em;
-  color: #D81B60;
-  text-shadow: 1px 1px #FFD700;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
   margin-bottom: 10px;
 }
 
-.affiliate-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  justify-items: center;
+.affiliate-disclaimer {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .affiliate-button {
   display: flex;
-  flex-direction: column;
   align-items: center;
   padding: 15px;
-  border: 3px solid #FFD700;
-  border-radius: 12px;
-  background-color: #FFF;
+  margin: 10px 0;
+  border-radius: 8px;
   text-decoration: none;
-  color: #E65100;
-  font-size: 0.9em;
-  max-width: 220px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+/* Unique green backgrounds for each affiliate link */
+.affiliate-button:nth-child(1) {
+  background-color: #006400; /* DarkGreen */
+}
+.affiliate-button:nth-child(1):hover {
+  background-color: #007700; /* Slightly lighter green */
+}
+
+.affiliate-button:nth-child(2) {
+  background-color: #228B22; /* ForestGreen */
+}
+.affiliate-button:nth-child(2):hover {
+  background-color: #2E9B2E;
+}
+
+.affiliate-button:nth-child(3) {
+  background-color: #2E8B57; /* SeaGreen */
+}
+.affiliate-button:nth-child(3):hover {
+  background-color: #3A9B67;
+}
+
+.affiliate-button:nth-child(4) {
+  background-color: #3CB371; /* MediumSeaGreen */
+}
+.affiliate-button:nth-child(4):hover {
+  background-color: #4CC381;
+}
+
+.affiliate-button:nth-child(5) {
+  background-color: #008000; /* Green */
+}
+.affiliate-button:nth-child(5):hover {
+  background-color: #009000;
+}
+
+.affiliate-button:nth-child(6) {
+  background-color: #6B8E23; /* OliveDrab */
+}
+.affiliate-button:nth-child(6):hover {
+  background-color: #7B9E33;
+}
+
+.affiliate-button:nth-child(7) {
+  background-color: #9ACD32; /* YellowGreen */
+}
+.affiliate-button:nth-child(7):hover {
+  background-color: #AADD42;
+}
+
+.affiliate-button:nth-child(8) {
+  background-color: #32CD32; /* LimeGreen */
+}
+.affiliate-button:nth-child(8):hover {
+  background-color: #42DD42;
+}
+
+.affiliate-button:nth-child(9) {
+  background-color: #00FF00; /* Lime */
+}
+.affiliate-button:nth-child(9):hover {
+  background-color: #10FF10;
+}
+
+.affiliate-button:nth-child(10) {
+  background-color: #7CFC00; /* LawnGreen */
+}
+.affiliate-button:nth-child(10):hover {
+  background-color: #8CFC10;
+}
+
+.affiliate-button:nth-child(11) {
+  background-color: #ADFF2F; /* GreenYellow */
+}
+.affiliate-button:nth-child(11):hover {
+  background-color: #BDFF3F;
+}
+
+.affiliate-button:nth-child(12) {
+  background-color: #00FA9A; /* MediumSpringGreen */
+}
+.affiliate-button:nth-child(12):hover {
+  background-color: #10FAAA;
 }
 
 .affiliate-image {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-  border-radius: 8px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 4px;
+}
+
+.affiliate-content {
+  flex: 1;
 }
 
 .affiliate-text {
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 8px;
-  color: #D81B60;
+  color: #000000;
+  margin-bottom: 5px;
 }
 
-.affiliate-funny {
-  font-size: 0.8em;
-  color: #F06292;
-  text-align: center;
-}
-
-.affiliate-disclaimer {
-  font-size: 0.8em;
-  color: #E65100;
-  margin-top: 15px;
-}
-
-/* Donation Text */
-.donation-text {
-  font-size: 0.9em;
-  color: #F06292;
-  text-align: center;
-  margin: 20px 0;
-  max-width: 500px;
-  background-color: #FFECB3;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.affiliate-description {
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.5;
 }
 
 /* Footer */
 .footer {
-  width: 100%;
-  margin: 30px 0;
-  text-align: center;
-  background-color: #FFECB3;
+  background-color: #FFD700;
+  color: #000000;
   padding: 20px;
-  border-radius: 12px;
+  margin-top: 20px;
 }
 
-.footer-content {
+.footer-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.footer-logo, .footer-fallback {
-  width: 50px;
-  height: 50px;
+.footer-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.footer-text-container {
+  flex: 1;
+  text-align: center;
 }
 
 .footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 
-.footer-link {
-  color: #FF5722;
+.footer-links li {
+  margin: 0;
+}
+
+.footer-privacy-text {
+  color: #FF69B4 !important;
+  background: none !important;
   text-decoration: none;
-  font-size: 0.9em;
+  font-size: 1em;
+  padding: 5px 10px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  display: inline-block;
+  transition: transform 0.2s;
+  text-shadow: 1px 1px #000000;
 }
 
-.footer-link:hover {
-  text-decoration: underline;
+.footer-privacy-text:hover {
+  color: #FF1493 !important;
+  transform: scale(1.1);
 }
 
-.footer-contact, .footer-copyright {
-  font-size: 0.9em;
-  color: #F06292;
-}
-
-.footer-email {
-  color: #FF5722;
+.footer-email-link {
+  color: #32CD32 !important;
+  background: none !important;
   text-decoration: none;
+  transition: transform 0.2s;
+  text-shadow: 1px 1px #000000;
 }
 
-.footer-email:hover {
-  text-decoration: underline;
+.footer-email-link:hover {
+  color: #228B22 !important;
+  transform: scale(1.1);
 }
 
-/* Modal */
+.footer-contact-text {
+  font-size: 1em;
+  margin: 5px 0;
+  color: #000000;
+}
+
+.footer-copyright {
+  font-size: 0.9em;
+  margin: 5px 0;
+  color: #000000;
+}
+
+.game-theory-text {
+  font-weight: bold;
+  font-family: 'Bangers', cursive;
+}
+
+/* Welcome modal */
 .welcome-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .welcome-content {
-  background-color: #FFF;
+  background: #FFF8DC;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 10px;
+  max-width: 500px;
   text-align: center;
-  max-width: 350px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 3px solid #FFD700;
 }
 
-.modal-image {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
+.dark-theme .welcome-content {
+  background: #2C2C2C;
+  color: #E0E0E0;
 }
 
-.modal-text {
-  font-size: 1.5em;
-  color: #D81B60;
+.welcome-content h2 {
+  font-family: 'Bangers', cursive;
+  font-size: 24px;
+  color: #FF4500;
 }
 
-.modal-sub-text {
-  font-size: 1em;
-  color: #F06292;
+.dark-theme .welcome-content h2 {
+  color: #FF6347;
+}
+
+.welcome-content p {
+  font-size: 16px;
+  color: #333;
   margin: 10px 0;
 }
 
+.dark-theme .welcome-content p {
+  color: #E0E0E0;
+}
+
+.welcome-content a {
+  color: #FF1493;
+  text-decoration: underline;
+}
+
 .welcome-button {
+  background: #4ECDC4;
+  border: none;
   padding: 10px 20px;
-  border: 2px solid #FFD700;
-  border-radius: 8px;
-  background-color: #FF5722;
-  color: #FFF;
-  font-size: 1em;
+  border-radius: 5px;
   cursor: pointer;
+  color: #FFF;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 .welcome-button:hover {
-  background-color: #F4511E;
+  background: #45B7AA;
 }
 
-.modal-button-text {
-  font-size: 1em;
-}
+/* Responsive design */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-/* Dark Theme */
-.dark-theme {
-  background-color: #212121;
-  color: #FFF;
-}
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.dark-theme .header, .dark-theme .subheader, .dark-theme .promo-text, .dark-theme .recipe-title, .dark-theme .recipe-section, .dark-theme .recipe-item, .dark-theme .affiliate-header, .dark-theme .affiliate-text, .dark-theme .footer-contact, .dark-theme .footer-copyright {
-  color: #FFF;
-}
+  .footer-logo {
+    width: 80px;
+    height: 80px;
+  }
 
-.dark-theme .promo-container, .dark-theme .favorites, .dark-theme .affiliate-section, .dark-theme .donation-text, .dark-theme .footer {
-  background-color: #424242;
-}
+  .header {
+    font-size: 2.2em;
+  }
 
-.dark-theme .recipe-card, .dark-theme .welcome-content {
-  background-color: #616161;
-}
+  .subheader {
+    font-size: 1.4em;
+  }
 
-.dark-theme .action-button, .dark-theme .welcome-button {
-  background-color: #F4511E;
-}
+  .action-button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
 
-.dark-theme .action-button:hover, .dark-theme .welcome-button:hover {
-  background-color: #FF5722;
-}
+  .affiliate-header {
+    font-size: 1.5em;
+  }
 
-.dark-theme .random-recipe {
-  background-color: #8E24AA;
-}
+  .affiliate-disclaimer {
+    font-size: 1em;
+  }
 
-.dark-theme .random-recipe:hover {
-  background-color: #AB47BC;
-}
+  .donation-message {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
 
-.dark-theme .clear-inputs {
-  background-color: #D32F2F;
-}
+  .affiliate-text {
+    font-size: 1em;
+  }
 
-.dark-theme .clear-inputs:hover {
-  background-color: #EF5350;
-}
-
-.dark-theme .theme-toggle {
-  background-color: #388E3C;
-}
-
-.dark-theme .theme-toggle:hover {
-  background-color: #4CAF50;
+  .affiliate-description {
+    font-size: 0.9em;
+  }
 }
