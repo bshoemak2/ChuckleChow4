@@ -257,59 +257,59 @@ export default function HomeScreen() {
       description: 'This ain’t no ordinary kitchen knife—it’s Granny’s hog-slicin’ beast, the best chef’s knife for Southern butchering! Sharp enough to carve a hog quicker than a banjo pickin’ at a hoedown, this blade slices through ribs, roasts, and taters like a hot knife through lard. Built for redneck cooks who mean business, it’s perfect for BBQ prep or whittlin’ down your catch. With a grip tougher than a gator’s hide, this knife’s a must for every country kitchen. Snag it and chop your way to culinary fame!'
     },
     {
-      title: '🍖 The Redneck BBQ Grill 🍖',
-      url: 'https://amzn.to/3A2e8pL',
-      image: 'https://m.media-amazon.com/images/I/81n5h6E6uBL._AC_SL1500_.jpg',
-      description: 'Fire up the best BBQ grill for Southern feasts—this bad boy’s hotter than a stolen truck on a dirt road! Built for redneck pitmasters, it’s got enough grillin’ space to cook a whole hog or a mess of ribs faster than you can say “yeehaw.” Portable for tailgates or sturdy for backyard shindigs, this grill’s tougher than a two-dollar steak and smokes meat so good your neighbors’ll be sniffin’ the air like hounds. Grab this smokin’ beast and turn your cookout into a legend—ain’t no party like a BBQ party!'
+      title: '🍺 Redneck Beer Pong Kit 🍺',
+      url: 'https://amzn.to/42re7n7',
+      image: 'https://m.media-amazon.com/images/I/81ZrDViTBTL._AC_SY355_.jpg',
+      description: 'Yeehaw, it’s party time! This ultimate beer pong kit is the best tailgate game for Southern hootenannies, turnin’ any backyard into a redneck rager. Packed with sturdy cups and balls tougher than a mule’s hindquarters, it’s built for epic battles at fish fries or huntin’ camp. Perfect for country party enthusiasts, this kit guarantees more laughs than a barrel of possums. Whether you’re aimin’ for glory or just spillin’ brew, it’s a must-have for good ol’ boys and gals. Grab it and pong your way to legend status!'
     },
     {
-      title: '🥔 Tater-Tastic Fry Cutter 🥔',
-      url: 'https://amzn.to/3YyL6iW',
-      image: 'https://m.media-amazon.com/images/I/51MDr8x0MPL._AC_SL1500_.jpg',
-      description: 'Y’all ready for fries crispier than a preacher’s collar on Sunday? This top-rated fry cutter for Southern kitchens turns taters into perfect wedges quicker than a raccoon raidin’ a trash can! Built tough for redneck snack attacks, it’s the ultimate tool for makin’ fries that’d make a truck stop jealous. Easy to clean and sturdier than a barn beam, this cutter’s perfect for cookouts or late-night munchies. Snag it now and fry up a storm—your belly’ll be singin’ hallelujah!'
+      title: '🐔 Cletus’s Chicken Tickler Whisk 🐔',
+      url: 'https://amzn.to/4j9uqMG',
+      image: 'https://m.media-amazon.com/images/I/41ccOMyTYLL._AC_SX425_.jpg',
+      description: 'Get ready to whip up a storm with Cletus’s Chicken Tickler, the best kitchen whisk for Southern baking! This bad boy mixes batter faster than a coon dog chasin’ a squirrel, perfect for cornbread, gravy, or moonshine-infused sauces. Built for redneck chefs who love a good ol’ mess, it’s sturdy enough to handle biscuit dough thicker than a fog on the bayou. A top pick for country cooking, this whisk’ll have you stirrin’ up chaos like nobody’s business. Snag it now and tickle your recipes into submission!'
     },
     {
-      title: '🍳 Cast Iron Chaos Skillet 🍳',
-      url: 'https://amzn.to/4dG8Kmb',
-      image: 'https://m.media-amazon.com/images/I/81QwF2+pnJL._AC_SL1500_.jpg',
-      description: 'This ain’t just a skillet, it’s a cast iron legend for Southern chaos cookin’! The best cast iron skillet for redneck kitchens sears steaks hotter than a Georgia asphalt in July and fries eggs smoother than a banjo tune. Built tougher than a mule’s back, it’s perfect for campfires, grills, or stovetops—season it right, and it’ll outlast your truck. Grab this kitchen workhorse and cook up a storm that’ll have your kin beggin’ for more—pure skillet swagger, y’all!'
+      title: '🥚 Possum’s Egg-Splodin’ Separator 🥚',
+      url: 'https://amzn.to/3EiOrkG',
+      image: 'https://m.media-amazon.com/images/I/61DHEfEI1TL._AC_SX425_.jpg',
+      description: 'Y’all need this egg separator more than a possum needs a hideout! The best egg yolk separator for Southern baking splits eggs cleaner than a preacher’s sermon on Sunday. Perfect for redneck bakers makin’ cakes, custards, or moonshine meringues, this gadget pops yolks like a firecracker at a hog roast. Easy to use and tougher than a barnyard rooster, it’s a must-have for country kitchens. Get this top-rated kitchen tool and separate eggs like a pro—your biscuits’ll rise higher than a kite in a twister!'
     },
     {
-      title: '🌶️ Spicy Rebel Hot Sauce Kit 🌶️',
-      url: 'https://amzn.to/3YSfR5E',
-      image: 'https://m.media-amazon.com/images/I/71zK2c5+-1L._AC_SL1500_.jpg',
-      description: 'Get ready to spice things up, y’all—this hot sauce kit’s wilder than a rodeo on moonshine! The best DIY hot sauce maker for Southern rebels lets you brew fiery concoctions that’ll set your tongue ablaze faster than a brushfire. Perfect for heat-lovin’ rednecks, it’s got all ya need to craft sauces hotter than a jalapeño’s armpit. Easy for beginners but bold enough for pros, this kit’s your ticket to flavor chaos. Snag it and turn every bite into a spicy showdown!'
+      title: '🥓 Hog Holler Bacon Gripper Tongs 🥓',
+      url: 'https://amzn.to/4jhJ8kA',
+      image: 'https://m.media-amazon.com/images/I/71jIBCjXMPL._AC_SX425_.jpg',
+      description: 'These ain’t just tongs—they’re the best bacon tongs for Southern frying, grippin’ strips tighter than a gator snappin’ a catfish! Perfect for flippin’ bacon, ribs, or taters in a skillet hotter than a Georgia summer, these bad boys are built for redneck grillmasters. With a grip steadier than your cousin’s aim at a skeet shoot, they’re essential for BBQ pit cookouts and fish fries. Snag these heavy-duty kitchen tongs and wrestle your grub like a pro—your breakfast plate’ll be hollerin’ for more!'
     },
     {
-      title: '🍗 Cluck ‘n’ Chuck Chicken Rack 🍗',
-      url: 'https://amzn.to/4dEJDhV',
-      image: 'https://m.media-amazon.com/images/I/61OhENeRBUL._AC_SL1500_.jpg',
-      description: 'Yeehaw, this chicken rack’s the real deal for Southern grill kings! The best beer can chicken roaster for redneck BBQs holds your bird upright tighter than a fiddle string, roastin’ it juicier than a peach in July. Built sturdy for chaos cooks, it’s perfect for slappin’ a cold one in the base and lettin’ the flavors rip. Whether it’s a hoedown or a holler, this rack’ll make your chicken the star. Grab it and cluck your way to glory!'
+      title: '🌽 Moonshine Mason Jar Measuring Cups 🌽',
+      url: 'https://amzn.to/44tvYwi',
+      image: 'https://m.media-amazon.com/images/I/51QJ8JIQCaL._AC_SY606_.jpg',
+      description: 'Measure your fixins with swagger usin’ these Moonshine Mason Jar Measuring Cups, the best measuring cups for Southern cooking! Shaped like mini mason jars, they’re perfect for scoopin’ flour, sugar, or moonshine for your cornbread or BBQ sauce. Built for redneck bakers and pitmasters, these durable cups are tougher than a junkyard dog and add hillbilly charm to any kitchen. Ideal for country recipes and tailgate prep, they’ll have you measurin’ like a pro. Grab these must-have kitchen tools and cook with some serious Southern style!'
     },
     {
-      title: '🥚 Egg-Scramblin’ Whisk o’ Doom 🥚',
-      url: 'https://amzn.to/3YSg7SI',
-      image: 'https://m.media-amazon.com/images/I/71P3P+-uRJL._AC_SL1200_.jpg',
-      description: 'This ain’t your mama’s whisk—it’s the best egg scrambler for Southern breakfast chaos! Whips eggs faster than a tornado in a trailer park, makin’ omelets fluffier than a sheep’s backside. Built tough for redneck cooks, this whisk’s perfect for mixin’ batter or sauces smoother than a politician’s promise. Easy to grip and meaner than a junkyard dog, it’s a kitchen must-have. Snag this whisk o’ doom and scramble your way to mornin’ greatness!'
+      title: '🔥 Gator’s Grill Scorchin’ Mitt 🔥',
+      url: 'https://amzn.to/4lsnUCh',
+      image: 'https://m.media-amazon.com/images/I/81Q8RGATIHL._AC_SX425_.jpg',
+      description: 'Don’t let no hot grill scare ya—this Gator’s Grill Scorchin’ Mitt is the best oven mitt for Southern BBQ! Built to handle blazin’ trillets and smokin’ pits hotter than a jalapeño’s temper, this mitt’s perfect for redneck grillmasters flippin’ ribs or haulin’ cornbread outta the oven. Heat-resistant and tougher than a gator’s hide, it’s a must for fish fries and tailgates. Protect your paws and wrestle them hot pans like a pro with this top-rated BBQ glove. Snag it and grill like you’re wrestlin’ a twister!'
     },
     {
-      title: '🍺 Swamp Juice Cooler 🍺',
-      url: 'https://amzn.to/3YUQh5F',
-      image: 'https://m.media-amazon.com/images/I/71cD+-X8iHL._AC_SL1500_.jpg',
-      description: 'Keep your brews colder than a gator’s belly with this swamp-ready cooler! The best cooler for Southern shindigs holds more cans than a fishin’ boat holds worms, perfect for redneck tailgates or riverbank rumbles. Built tougher than a pine knot, it’ll keep ice longer than a winter in the holler. Portable and loud as a rebel yell, this cooler’s your ticket to party central. Grab it now and keep the swamp juice flowin’ all night long!'
+      title: '🍔 Squirrel’s Nutty Pancake Flipper 🍔',
+      url: 'https://amzn.to/3RJ4U4K',
+      image: 'https://m.media-amazon.com/images/I/71AicV-umtL._AC_SX425_.jpg',
+      description: 'Flip flapjacks like a pro with Squirrel’s Nutty Pancake Flipper, the best spatula for Southern breakfast cooking! This sturdy flipper slides under pancakes, burgers, or catfish quicker than a squirrel dodgin’ buckshot in a pecan grove. Perfect for redneck cooks whippin’ up griddle feasts, it’s built to handle cast iron skillets and greasy spoon grills. A top pick for country kitchens, this spatula’s non-stick friendly and tough as nails. Grab this essential kitchen tool and flip your way to a breakfast spread that’ll make the neighbors jealous!'
     },
     {
-      title: '🥩 Meat-Manglin’ Tenderizer 🥩',
-      url: 'https://amzn.to/3A1fMvx',
-      image: 'https://m.media-amazon.com/images/I/61N+w8Q94UL._AC_SL1500_.jpg',
-      description: 'Y’all, this meat tenderizer’s meaner than a rattlesnake with a hangover! The best meat mallet for Southern kitchens pounds steaks flatter than a roadkill possum, makin’ ‘em tender enough to melt in your mouth. Built for redneck grillers, it’s perfect for beatin’ tough cuts into submission quicker than a bar fight. Double-sided for max chaos, this tool’s a BBQ game-changer. Snag it and mangle your meat like a pro—supper’s gonna be epic!'
+      title: '🐷 Caja China Pig Roasting Box 🐷',
+      url: 'https://amzn.to/4cz2GP4',
+      image: 'https://m.media-amazon.com/images/I/61eD3oq2XXL._AC_SX425_.jpg',
+      description: 'Ready for a hog-roastin’ hoedown? The Caja China Pig Roasting Box is the best pig roaster for Southern BBQ, turnin’ whole hogs into melt-in-your-mouth masterpieces faster than a banjo duel. Perfect for redneck pitmasters hostin’ epic cookouts, this bad boy’s built to roast juicy pork with that crispy skin everybody fights over. Ideal for tailgates, weddings, or just showin’ off, it’s a game-changer for country feasts. Snag this top-rated BBQ roaster and become the legend of the pig pickin’—your kin’ll be singin’ your praises!'
     },
     {
-      title: '🍕 Pizza Pandemonium Stone 🍕',
-      url: 'https://amzn.to/3YSgDac',
-      image: 'https://m.media-amazon.com/images/I/81pW3XmqDCL._AC_SL1500_.jpg',
-      description: 'Crank up the chaos with the best pizza stone for Southern ovens! This bad boy crisps crusts crunchier than a hog’s hide in a fryer, bakin’ pies hotter than a tin roof in August. Built tough for redneck pizza nights, it’s perfect for slingin’ dough like a pro or heatin’ up leftovers tastier than day-old biscuits. Even heat, no mess—this stone’s your ticket to pie perfection. Grab it and unleash pizza pandemonium at your next shindig!'
-    }
+      title: '🍳 Hillbilly Cast Iron Skillet 🍳',
+      url: 'https://amzn.to/42H0vp9',
+      image: 'https://m.media-amazon.com/images/I/81lU5G0EU-L._AC_SX425_.jpg',
+      description: 'This Hillbilly Cast Iron Skillet is the best cast iron skillet for Southern cooking, tougher than a mule’s hide and seasoned better than Granny’s gossip! Fry up catfish, cornbread, or bacon crispier than a June bug on a hot sidewalk. Perfect for redneck chefs who live for that sizzle, this skillet’s built to last through fish fries, campfires, and tailgate brawls. A must-have for country kitchens, it’s pre-seasoned and ready to churn out soul food that’ll make your kinfolk weep. Grab this skillet and cook like a Southern legend!'
+    },
   ];
 
   const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -734,7 +734,7 @@ export default function HomeScreen() {
           <div className="welcome-modal">
             <div className="welcome-content">
               <h2>Howdy, Y’all! 🤠</h2>
-              <p>Yeehaw, welcome to *Chuckle & Chow*! 🤠🔥 Grab them dropdowns, slam 'Surprise Me!' for a hog-wild dish, or hit 'Generate Recipe' to stir up some Southern mayhem! 🌪️🍖 Got a bone to pick? Holler at <a href="mailto:bshoemak@mac.com">bshoemak@mac.com</a>! 📧</p>
+              <p>Yeehaw, welcome to *Chuckle & Chow*! 🤠🔥 Grab them dropdowns, slam 'Surprise Me!' for a hog-wild dish, or hit 'Cook Me a Hoot!' to stir up some Southern mayhem! 🌪️🍖 Got a bone to pick? Holler at <a href="mailto:bshoemak@mac.com">bshoemak@mac.com</a>! 📧</p>
               <button className="welcome-button" onClick={dismissWelcome}>
                 Got It!
               </button>
@@ -852,7 +852,7 @@ export default function HomeScreen() {
               aria-label="Generate recipe"
               title="Yeehaw, let’s make a mess!"
             >
-              <span className="action-button-text">🍳 Generate Recipe 🎉</span>
+              <span className="action-button-text">🍳 Cook Me a Hoot! 🎉</span>
             </button>
             <button
               className={`action-button random-recipe ${isLoading ? 'disabled' : ''}`}
@@ -861,7 +861,7 @@ export default function HomeScreen() {
               aria-label="Generate random recipe"
               title="Stir up some wild chaos!"
             >
-              <span className="action-button-text">🎲 Random Recipe 🌩️</span>
+              <span className="action-button-text">🎲 Random Ruckus Recipe 🌩️</span>
             </button>
             <button
               className={`action-button surprise-me ${isLoading ? 'disabled' : ''}`}
@@ -870,7 +870,7 @@ export default function HomeScreen() {
               aria-label="Randomize all ingredients"
               title="Throw caution to the wind, partner!"
             >
-              <span className="action-button-text">🎉 Randomize Ingredients 🤪</span>
+              <span className="action-button-text">🎉 Surprise Me! 🤪</span>
             </button>
             <button
               className="action-button clear-inputs"
@@ -878,7 +878,7 @@ export default function HomeScreen() {
               aria-label="Clear inputs"
               title="Wipe the slate cleaner than a hog’s hide!"
             >
-              <span className="action-button-text">🧹 Clear Selections 🐴</span>
+              <span className="action-button-text">🧹 Wipe the Slate, Bubba 🐴</span>
             </button>
           </div>
           {recipe && (
@@ -886,7 +886,7 @@ export default function HomeScreen() {
           )}
           <div className="donation-section">
             <p className="donation-message">
-              To help pay for xAi recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ($barlitorobusto). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking at...just ask via email.
+              xAi ain't free! To help pay for recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ( $barlitorobusto ). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking...just ask via email.
             </p>
           </div>
           <AffiliateSection />
