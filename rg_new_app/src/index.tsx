@@ -886,7 +886,7 @@ export default function HomeScreen() {
           )}
           <div className="donation-section">
             <p className="donation-message">
-              xAi ain't free! To help pay for recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ( $barlitorobusto ). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or pumped and dumped crypto bags you're tired of looking...just ask via email.
+              To help pay for recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ($barlitorobusto). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or crypto bags you're tired of watchin...just ask via email.
             </p>
           </div>
           <AffiliateSection />
