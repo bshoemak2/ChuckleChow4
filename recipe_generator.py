@@ -38,27 +38,51 @@ def match_predefined_recipe(ingredients, language='english'):
             return None
 
         title = best_recipe['title_es'] if language == 'spanish' else best_recipe['title_en']
+        # Add emojis to predefined recipe output
         recipe_text = (
-            f"### **{title}**\n\n"
-            f"**Ingredients:**\n" +
-            "\n".join(f"- {ing['name']} ({ing['amount']})" for ing in best_recipe['ingredients']) + "\n\n"
-            f"**Steps:**\n" +
-            "\n".join(f"{i+1}. {step}" for i, step in enumerate(best_recipe['steps'])) + "\n\n"
-            f"**Nutrition:**\n- Calories: {best_recipe['nutrition']['calories']}\n"
-            f"- Protein: {best_recipe['nutrition']['protein']}g\n"
-            f"- Fat: {best_recipe['nutrition']['fat']}g\n"
-            f"- Chaos Factor: {best_recipe['nutrition']['chaos_factor']}/10\n\n"
-            f"**Equipment Needed:**\n" + ", ".join(best_recipe['equipment']) + "\n\n"
-            f"**Cooking Time:** {best_recipe['cooking_time']} minutes\n\n"
-            f"**Difficulty:** {best_recipe['difficulty']}\n\n"
-            f"**Servings:** {best_recipe['servings']}\n\n"
-            f"**Tips:**\n- {best_recipe['tips']}"
+            f"### **{title}** 🎉\n\n"
+            f"**Ingredients:** 🥗\n" +
+            "\n".join(f"- {ing['name']} ({ing['amount']}) {get_ingredient_emoji(ing['name'])}" for ing in best_recipe['ingredients']) + "\n\n"
+            f"**Steps:** 🔢\n" +
+            "\n".join(f"{i+1}. {step} ✅" for i, step in enumerate(best_recipe['steps'])) + "\n\n"
+            f"**Nutrition:** 📊\n- 🔥 Calories: {best_recipe['nutrition']['calories']}\n"
+            f"- 💪 Protein: {best_recipe['nutrition']['protein']}g\n"
+            f"- 🧈 Fat: {best_recipe['nutrition']['fat']}g\n"
+            f"- 😜 Chaos Factor: {best_recipe['nutrition']['chaos_factor']}/10\n\n"
+            f"**Equipment Needed:** 🍳\n" + ", ".join(f"{eq} {get_equipment_emoji(eq)}" for eq in best_recipe['equipment']) + "\n\n"
+            f"**Cooking Time:** ⏰ {best_recipe['cooking_time']} minutes\n\n"
+            f"**Difficulty:** 🎯 {best_recipe['difficulty']}\n\n"
+            f"**Servings:** 🍽️ {best_recipe['servings']}\n\n"
+            f"**Tips:** 💡\n- {best_recipe['tips']}"
         )
         logging.info(f"Matched predefined recipe: {title}")
         return {"text": recipe_text}
     except Exception as e:
         logging.error(f"Error matching predefined recipe: {str(e)}", exc_info=True)
         return None
+
+def get_ingredient_emoji(ingredient):
+    """Return an emoji based on the ingredient type."""
+    ingredient = ingredient.lower()
+    emoji_map = {
+        'tofu': '🥗', 'chicken': '🍗', 'shrimp': '🦐', 'pork': '🥓', 'ground beef': '🍔', 'catfish': '🐟', 'salmon': '🐟',
+        'pork ribs': '�' : '🍖', 'black beans': '🥫', 'kidney beans': '🥫', 'bell pepper': '🫑', 'broccoli': '🥦', 'onion': '🧅',
+        'garlic': '🧄', 'ginger': '🌱', 'apple': '🍎', 'mango': '🥭', 'lemon': '🍋', 'lime': '🍈', 'avocado': '🥑',
+        'tomato': '🍅', 'lettuce': '🥬', 'green onion': '🧅', 'soy sauce': '🥢', 'moonshine': '🥃', 'tequila': '🍹',
+        'bbq sauce': '🥄', 'remoulade sauce': '🥄', 'sriracha': '🌶️', 'chili powder': '🌶️', 'paprika': '🌶️',
+        'cajun seasoning': '🌶️', 'fajita seasoning': '🌮', 'rosemary': '🌿', 'grits': '🥣', 'rice': '🍚',
+        'pasta': '🍝', 'tortilla': '🌮', 'baguette': '🥖', 'cheddar cheese': '🧀', 'butter': '🧈', 'bacon': '🥓'
+    }
+    return emoji_map.get(ingredient, '🥄')
+
+def get_equipment_emoji(equipment):
+    """Return an emoji based on the equipment type."""
+    equipment = equipment.lower()
+    emoji_map = {
+        'wok': '🥘', 'skillet': '🍳', 'roasting pan': '🍲', 'baking sheet': '🥧', 'pot': '🍲', 'spatula': '🥄',
+        'toaster': '🍞', 'bowl': '🥣', 'foil': '📜'
+    }
+    return emoji_map.get(equipment, '🔧')
 
 def generate_dynamic_recipe(ingredients, preferences=None):
     try:
@@ -80,14 +104,18 @@ def generate_dynamic_recipe(ingredients, preferences=None):
                 extra_ingredient = random.choice(flavor_pairs[ing])
                 break
 
-        # Build prompt
+        # Build prompt with emoji instructions
         ingredient_list = ", ".join(ingredients + ([extra_ingredient] if extra_ingredient else [])) if ingredients else "random Southern ingredients"
         prompt = (
             f"Create a Southern-style recipe with a hilarious redneck vibe, using {ingredient_list} as key ingredients. "
             "Include a funny title, ingredients with measurements, detailed steps with Southern swagger, equipment needed, "
             "a quirky 'chaos gear' (e.g., a busted spatula), cooking time, difficulty (easy/medium/hard), servings, "
             "nutrition info (calories, protein, fat, chaos factor 1-10), and a tip that’s useful but ridiculous. "
-            "Write it in Markdown, like you’re tellin’ a buddy over a beer. Keep it cookable and fun!"
+            "Write it in Markdown, like you’re tellin’ a buddy over a beer. Keep it cookable and fun! "
+            "Add emojis to enhance readability: 🥗 for ingredients section, 🥄 or specific emojis (e.g., 🍗 for meats, 🥕 for veggies) after each ingredient, "
+            "🔢 for steps section with ✅ after each step, 🍳 for equipment section with specific emojis (e.g., 🍲 for pans, 🔪 for knives), "
+            "📊 for nutrition with 🔥 for calories, 💪 for protein, 🧈 for fat, 😜 for chaos factor, ⏰ for cooking time, "
+            "🎯 for difficulty, 🍽️ for servings, and 💡 for tips."
         )
 
         # Call xAI API
