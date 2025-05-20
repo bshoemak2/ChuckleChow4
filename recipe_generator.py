@@ -66,20 +66,22 @@ def get_ingredient_emoji(ingredient):
     ingredient = ingredient.lower()
     emoji_map = {
         'tofu': '🥗', 'chicken': '🍗', 'shrimp': '🦐', 'pork': '🥓', 'ground beef': '🍔', 'catfish': '🐟', 'salmon': '🐟',
-        'pork ribs': '🍖', 'black beans': '🥫', 'red beans': '🥫', 'baked beans': '🥫', 'kidney beans': '🥫', 
-        'bell pepper': '🫑', 'broccoli': '🥦', 'onion': '🧅', 'garlic': '🧄', 'ginger': '🌱', 'apple': '🍎', 
-        'mango': '🥭', 'lemon': '🍋', 'lime': '🍈', 'avocado': '🥑', 'tomato': '🍅', 'lettuce': '🥬', 
-        'green onion': '🧅', 'soy sauce': '🥢', 'moonshine': '🥃', 'tequila': '🍹', 'bbq sauce': '🥄', 
-        'remoulade sauce': '🥄', 'sriracha': '🌶️', 'chili powder': '🌶️', 'paprika': '🌶️', 
-        'cajun seasoning': '🌶️', 'fajita seasoning': '🌮', 'rosemary': '🌿', 'grits': '🥣', 'rice': '🍚', 
-        'white rice': '🍚', 'yellow rice': '🍚', 'pasta': '🍝', 'tortilla': '🌮', 'baguette': '🥖', 
-        'cheddar cheese': '🧀', 'butter': '🧈', 'bacon': '🥓', 'sausage': '🌭', 'gator': '🐊', 
-        'froglegs': '🐸', 'iguana': '🦎', 'turkey': '🦃', 'shrooms': '🍄', 'swamp cabbage': '🌾', 
-        'palm hearts': '🌴', 'yuca': '🌱', 'plantains': '🍌', 'coconuts': '🥥', 'lychee': '🍒', 
-        'shark': '🦈', 'kingfish': '🐠', 'cobia': '🐠', 'mahi mahi': '🐠', 'permit': '🐠', 
-        'speckled trout': '🐠', 'scallops': '🦪', 'snook': '🐟', 'sheephead': '🐟', 'redfish': '🐡', 
-        'ice cream': '🍨', 'cuban bread': '🥖', 'donut': '🍩', 'bagels': '🥯', 'french fries': '🍟', 
-        'arepa': '🫓', 'pancakes': '🥞', 'waffles': '🧇', 'ipa beer': '🍺', 'stout beer': '🍺'
+        'pork ribs': '🍖', 'black beans': '🫘', 'red beans': '🫘', 'baked beans': '🫘', 'kidney beans': '🫘',
+        'bell pepper': '🫑', 'broccoli': '🥦', 'onion': '🧅', 'garlic': '🧄', 'ginger': '🌱', 'apple': '🍎',
+        'mango': '🥭', 'lemon': '🍋', 'lime': '🍈', 'avocado': '🥑', 'tomato': '🍅', 'lettuce': '🥬',
+        'green onion': '🧅', 'soy sauce': '🥢', 'moonshine': '🥃', 'tequila': '🍹', 'bbq sauce': '🥄',
+        'remoulade sauce': '🥄', 'sriracha': '🌶️', 'chili powder': '🌶️', 'paprika': '🌶️',
+        'cajun seasoning': '🌶️', 'fajita seasoning': '🌮', 'rosemary': '🌿', 'grits': '🥣', 'rice': '🍚',
+        'white rice': '🍚', 'yellow rice': '🍚', 'pasta': '🍝', 'tortilla': '🌮', 'baguette': '🥖',
+        'cheddar cheese': '🧀', 'butter': '🧈', 'bacon': '🥓', 'sausage': '🌭', 'gator': '🐊',
+        'froglegs': '🐸', 'iguana': '🦎', 'turkey': '🦃', 'shrooms': '🍄', 'swamp cabbage': '🌾',
+        'palm hearts': '🌴', 'yuca': '🌱', 'plantains': '🍌', 'coconuts': '🥥', 'lychee': '🍒',
+        'shark': '🦈', 'kingfish': '🐠', 'cobia': '🐠', 'mahi mahi': '🐠', 'permit': '🐠',
+        'speckled trout': '🐠', 'scallops': '🦪', 'snook': '🐟', 'sheephead': '🐟', 'redfish': '🐡',
+        'ice cream': '🍨', 'cuban bread': '🥖', 'donut': '🍩', 'bagels': '🥯', 'french fries': '🍟',
+        'arepa': '🫓', 'pancakes': '🥞', 'waffles': '🧇', 'ipa beer': '🍺', 'stout beer': '🍺',
+        'mullet': '🐟', 'smoked mullet': '🐟', 'white bread': '🍞', 'wheat bread': '🍞', 'toast': '🍞',
+        'lima beans': '🫘', 'black-eyed peas': '🫘', 'pinto beans': '🫘', 'navy beans': '🫘'
     }
     return emoji_map.get(ingredient, '🥄')
 
@@ -168,12 +170,13 @@ def generate_random_recipe(language='english'):
         # Define Southern-themed ingredients for randomization
         southern_ingredients = [
             'churrasco', 'ground beef', 'chicken', 'pork', 'shrimp', 'catfish', 'green beans', 'okra', 'collards',
-            'potato', 'lemon', 'cheese', 'butter', 'grits', 'rice', 'whiskey', 'moonshine', 'beer', 'sausage', 
-            'gator', 'froglegs', 'iguana', 'turkey', 'shrooms', 'swamp cabbage', 'palm hearts', 'yuca', 
-            'plantains', 'coconuts', 'lychee', 'shark', 'kingfish', 'cobia', 'mahi mahi', 'permit', 
-            'speckled trout', 'scallops', 'snook', 'sheephead', 'redfish', 'ice cream', 'cuban bread', 
-            'donut', 'white rice', 'yellow rice', 'black beans', 'red beans', 'baked beans', 'bagels', 
-            'french fries', 'arepa', 'pancakes', 'waffles', 'ipa beer', 'stout beer'
+            'potato', 'lemon', 'cheese', 'butter', 'grits', 'rice', 'whiskey', 'moonshine', 'beer', 'sausage',
+            'gator', 'froglegs', 'iguana', 'turkey', 'shrooms', 'swamp cabbage', 'palm hearts', 'yuca',
+            'plantains', 'coconuts', 'lychee', 'shark', 'kingfish', 'cobia', 'mahi mahi', 'permit',
+            'speckled trout', 'scallops', 'snook', 'sheephead', 'redfish', 'ice cream', 'cuban bread',
+            'donut', 'white rice', 'yellow rice', 'black beans', 'red beans', 'baked beans', 'bagels',
+            'french fries', 'arepa', 'pancakes', 'waffles', 'ipa beer', 'stout beer', 'mullet', 'smoked mullet',
+            'white bread', 'wheat bread', 'toast', 'lima beans', 'black-eyed peas', 'pinto beans', 'kidney beans', 'navy beans'
         ]
         num_ingredients = random.randint(3, 6)
         ingredients = random.sample(southern_ingredients, num_ingredients)

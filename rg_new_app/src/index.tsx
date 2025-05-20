@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Recipe } from './types';
-import './styles.css?v=3.9';
+import './styles.css?v=3.4'; // Reverted to old version for styling
 
 const generateUUID = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -9,6 +8,21 @@ const generateUUID = () => {
     return v.toString(16);
   });
 };
+
+interface Recipe {
+  text?: string;
+  title?: string;
+  ingredients?: Array<{ name: string; amount: string } | string | [string, string]>;
+  steps?: Array<{ step: string } | string>;
+  nutrition?: { calories: number; protein: number; fat: number; chaos_factor: number };
+  equipment?: string[];
+  cooking_time?: number;
+  difficulty?: string;
+  servings?: number;
+  tips?: string[];
+  chaos_gear?: string;
+  shareText?: string;
+}
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -41,12 +55,12 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
 const decodeMarkdown = (text: string): string => {
   return text
-    .replace(/###\s/g, '\n\n🍴 ') // Convert ### to fork emoji with spacing
-    .replace(/\*\*(.*?)\*\*/g, '🔥 $1 🔥') // Convert **text** to fire emojis
-    .replace(/^- /gm, '➡️ ') // Convert - to arrow emoji
-    .replace(/^\d+\.\s/gm, (match) => `${match}\n`) // Add newline after numbered steps
-    .replace(/\n{3,}/g, '\n\n') // Normalize multiple newlines
-    .trim(); // Remove leading/trailing whitespace
+    .replace(/###\s/g, '\n\n🍴 ')
+    .replace(/\*\*(.*?)\*\*/g, '🔥 $1 🔥')
+    .replace(/^- /gm, '➡️ ')
+    .replace(/^\d+\.\s/gm, (match) => `${match}\n`)
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 };
 
 export default function HomeScreen() {
@@ -57,6 +71,8 @@ export default function HomeScreen() {
   const [seafood, setSeafood] = useState('');
   const [dairy, setDairy] = useState('');
   const [carb, setCarb] = useState('');
+  const [beans, setBeans] = useState('');
+  const [bread, setBread] = useState('');
   const [devilWater, setDevilWater] = useState('');
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -176,8 +192,8 @@ export default function HomeScreen() {
       { name: 'shrooms', emoji: '🍄' },
       { name: 'swamp cabbage', emoji: '🌾' },
       { name: 'palm hearts', emoji: '🌴' },
-	  { name: 'yuca', emoji: '🌱' },
-	  { name: 'plaintains', emoji: '🍌' },	  
+      { name: 'yuca', emoji: '🌱' },
+      { name: 'plaintains', emoji: '🍌' },
     ],
     fruits: [
       { name: 'apple', emoji: '🍎' },
@@ -216,6 +232,8 @@ export default function HomeScreen() {
       { name: 'snook', emoji: '🐟' },
       { name: 'sheephead', emoji: '🐟' },
       { name: 'redfish', emoji: '🐡' },
+      { name: 'mullet', emoji: '🐟' },
+      { name: 'smoked mullet', emoji: '🐟' },
     ],
     dairy: [
       { name: 'cheese', emoji: '🧀' },
@@ -226,25 +244,35 @@ export default function HomeScreen() {
       { name: 'eggs', emoji: '🥚' },
     ],
     carbs: [
-      { name: 'bread', emoji: '🍞' },
-      { name: 'cuban bread', emoji: '🥖' },
-      { name: 'donut', emoji: '🍩' },
       { name: 'pasta', emoji: '🍝' },
       { name: 'white rice', emoji: '🍚' },
-	  { name: 'yellow rice', emoji: '🍚' },
+      { name: 'yellow rice', emoji: '🍚' },
       { name: 'rice', emoji: '🍚' },
-      { name: 'black beans', emoji: '🫘' },
-      { name: 'red beans', emoji: '🫘' },
-      { name: 'baked beans', emoji: '🫘' },	  
-      { name: 'tortilla', emoji: '🌮' },
-      { name: 'biscuits', emoji: '🥐' },
+    ],
+    breads: [
+      { name: 'bread', emoji: '🍞' },
+      { name: 'cuban bread', emoji: '🥖' },
       { name: 'bagels', emoji: '🥯' },
-      { name: 'french fries', emoji: '🍟' },
-      { name: 'cachapas', emoji: '🌽' },
-      { name: 'arepa', emoji: '🫓' },
+      { name: 'biscuits', emoji: '🥐' },
       { name: 'cornbread', emoji: '🍞' },
       { name: 'pancakes', emoji: '🥞' },
       { name: 'waffles', emoji: '🧇' },
+      { name: 'tortilla', emoji: '🌮' },
+      { name: 'arepa', emoji: '🫓' },
+      { name: 'cachapas', emoji: '🌽' },
+      { name: 'white bread', emoji: '🍞' },
+      { name: 'wheat bread', emoji: '🍞' },
+      { name: 'toast', emoji: '🍞' },
+    ],
+    beans: [
+      { name: 'black beans', emoji: '🫘' },
+      { name: 'red beans', emoji: '🫘' },
+      { name: 'baked beans', emoji: '🫘' },
+      { name: 'lima beans', emoji: '🫘' },
+      { name: 'black-eyed peas', emoji: '🫘' },
+      { name: 'pinto beans', emoji: '🫘' },
+      { name: 'kidney beans', emoji: '🫘' },
+      { name: 'navy beans', emoji: '🫘' },
     ],
     devilWater: [
       { name: 'beer', emoji: '🍺' },
@@ -351,7 +379,7 @@ export default function HomeScreen() {
   };
 
   const fetchRecipe = async (isRandom = false) => {
-    const selectedIngredients = [meat, vegetable, fruit, seafood, dairy, carb, devilWater]
+    const selectedIngredients = [meat, vegetable, fruit, seafood, dairy, carb, beans, bread, devilWater]
       .filter(Boolean)
       .map(ing => ing.toLowerCase());
 
@@ -413,30 +441,31 @@ export default function HomeScreen() {
   };
 
   const debouncedFetchRecipe = useCallback(debounce(fetchRecipe, 500), [
-    meat, vegetable, fruit, seafood, dairy, carb, devilWater
+    meat, vegetable, fruit, seafood, dairy, carb, beans, bread, devilWater
   ]);
 
   const surpriseMe = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setMeat('');
-    setVegetable('');
-    setFruit('');
-    setSeafood('');
-    setDairy('');
-    setCarb('');
-    setDevilWater('');
-    const categories = Object.keys(INGREDIENT_CATEGORIES) as (keyof typeof INGREDIENT_CATEGORIES)[];
-    const randomIngredients = categories.map(category => {
-      const items = INGREDIENT_CATEGORIES[category];
-      return items[Math.floor(Math.random() * items.length)].name;
-    });
-    setMeat(randomIngredients[0]);
-    setVegetable(randomIngredients[1]);
-    setFruit(randomIngredients[2]);
-    setSeafood(randomIngredients[3]);
-    setDairy(randomIngredients[4]);
-    setCarb(randomIngredients[5]);
-    setDevilWater(randomIngredients[6]);
+    const randomIngredients = {
+      meat: INGREDIENT_CATEGORIES.meat[Math.floor(Math.random() * INGREDIENT_CATEGORIES.meat.length)].name,
+      vegetables: INGREDIENT_CATEGORIES.vegetables[Math.floor(Math.random() * INGREDIENT_CATEGORIES.vegetables.length)].name,
+      fruits: INGREDIENT_CATEGORIES.fruits[Math.floor(Math.random() * INGREDIENT_CATEGORIES.fruits.length)].name,
+      seafood: INGREDIENT_CATEGORIES.seafood[Math.floor(Math.random() * INGREDIENT_CATEGORIES.seafood.length)].name,
+      dairy: INGREDIENT_CATEGORIES.dairy[Math.floor(Math.random() * INGREDIENT_CATEGORIES.dairy.length)].name,
+      carbs: INGREDIENT_CATEGORIES.carbs[Math.floor(Math.random() * INGREDIENT_CATEGORIES.carbs.length)].name,
+      beans: INGREDIENT_CATEGORIES.beans[Math.floor(Math.random() * INGREDIENT_CATEGORIES.beans.length)].name,
+      bread: INGREDIENT_CATEGORIES.breads[Math.floor(Math.random() * INGREDIENT_CATEGORIES.breads.length)].name,
+      devilWater: INGREDIENT_CATEGORIES.devilWater[Math.floor(Math.random() * INGREDIENT_CATEGORIES.devilWater.length)].name,
+    };
+    setMeat(randomIngredients.meat);
+    setVegetable(randomIngredients.vegetables);
+    setFruit(randomIngredients.fruits);
+    setSeafood(randomIngredients.seafood);
+    setDairy(randomIngredients.dairy);
+    setCarb(randomIngredients.carbs);
+    setBeans(randomIngredients.beans);
+    setBread(randomIngredients.bread);
+    setDevilWater(randomIngredients.devilWater);
     const requestId = generateUUID();
     console.log('Surprise Me! selected ingredients:', randomIngredients, 'requestId:', requestId);
     debouncedFetchRecipe(true);
@@ -491,6 +520,8 @@ export default function HomeScreen() {
     setSeafood('');
     setDairy('');
     setCarb('');
+    setBeans('');
+    setBread('');
     setDevilWater('');
     setRecipe(null);
     setError(null);
@@ -748,7 +779,7 @@ export default function HomeScreen() {
     );
   });
 
-  const hasIngredients = [meat, vegetable, fruit, seafood, dairy, carb, devilWater].some(Boolean);
+  const hasIngredients = [meat, vegetable, fruit, seafood, dairy, carb, beans, bread, devilWater].some(Boolean);
 
   return (
     <ErrorBoundary>
@@ -778,9 +809,9 @@ export default function HomeScreen() {
             <span className="action-button-text">{theme === 'light' ? '🌙 Moonshine Mode' : '🌞 Daylight Chaos'}</span>
           </button>
           <div className="promo-container">
-            {promoQuotes.map((quote, index) => (
-              <p key={`promo-${index}-${quote}`} className="promo-text">{quote.replace(/^\?+\s*/, '')}</p>
-            ))}
+            <p className="promo-text">🌶️ Hotter than a jalapeño’s armpit</p>
+            <p className="promo-text">🍺 Best with a cold one, yeehaw!</p>
+            <p className="promo-text">🐷 Crazier than a hog on a hot tin roof</p>
           </div>
           <PickerSection
             label="🥩 Meaty Madness 🍖"
@@ -816,14 +847,29 @@ export default function HomeScreen() {
             value={dairy}
             onValueChange={setDairy}
             className="dairy"
-            labelStyle={{ color: '#000000' }}
           />
           <PickerSection
-            label="🍞 Carb Craze 🍝"
+            label="🍚 Grain & Pasta Party 🍝"
             category="carbs"
             value={carb}
             onValueChange={setCarb}
             className="carbs"
+            labelStyle={{ color: '#FFFFFF' }}
+          />
+          <PickerSection
+            label="🍞 Bubba's Bread Basket 🥖"
+            category="breads"
+            value ={bread}
+            onValueChange={setBread}
+            className="breads"
+            labelStyle={{ color: '#FFFFFF' }}
+          />
+          <PickerSection
+            label="🥫 Bubba's Bean Bonanza 🥫"
+            category="beans"
+            value={beans}
+            onValueChange={setBeans}
+            className="beans"
             labelStyle={{ color: '#FFFFFF' }}
           />
           <PickerSection
@@ -909,7 +955,7 @@ export default function HomeScreen() {
           )}
           <div className="donation-section">
             <p className="donation-message">
-              To help pay for recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ($barlitorobusto). We'll even take bitcoin at bc1qs28qfmxmm6vcv6xt2rw5w973tp23wpaxwd988l or crypto bags you're tired of watchin...just ask via email.
+              🍺 xAi ain't free! To help pay for sweet southern Ai recipes donate some bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ( $barlitorobusto ). Thank Ye 🤠
             </p>
           </div>
           <AffiliateSection />
