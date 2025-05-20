@@ -115,6 +115,14 @@ body {
   background-color: #8B4513;
 }
 
+.input-section.breads {
+  background-color: #DEB887; /* BurlyWood, golden for bread */
+}
+
+.input-section.beans {
+  background-color: #8FBC8F; /* DarkSeaGreen, earthy for beans */
+}
+
 .input-section.devilWater {
   background-color: #800080;
 }

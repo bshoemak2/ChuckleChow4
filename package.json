@@ -1,11 +1,13 @@
 {
   "name": "chuckle-chow",
   "version": "1.0.0",
-"scripts": {
-  "dev": "vite",
-  "build": "cross-env NODE_ENV=production tsc -b && vite build",
-  "preview": "vite preview"
-},
-  "dependencies": {},
-  "devDependencies": {}
+  "scripts": {
+    "dev": "vite",
+    "build": "rmdir /S /Q dist 2>nul && cross-env NODE_ENV=production tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "typescript": "^5.8.3"
+  }
 }
