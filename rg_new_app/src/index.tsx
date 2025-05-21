@@ -159,17 +159,22 @@ export default function HomeScreen() {
   const INGREDIENT_CATEGORIES = {
     meat: [
       { name: 'ground beef', emoji: '🍔' },
+      { name: 'bacon', emoji: '🥓' },
       { name: 'chicken', emoji: '🍗' },
       { name: 'pork', emoji: '🥓' },
       { name: 'lamb', emoji: '🐑' },
       { name: 'pichana', emoji: '🥩' },
       { name: 'churrasco', emoji: '🍖' },
+      { name: 'country ham', emoji: '🐖' },
       { name: 'ribeye steaks', emoji: '🍽️' },
       { name: 'rabbit', emoji: '🐰' },
+      { name: 'rocky mountain oysters', emoji: '🐂' },
+      { name: 'venison', emoji: '🐦' },
       { name: 'quail', emoji: '🐦' },
       { name: 'pork ribs', emoji: '🍖' },
       { name: 'beef ribs', emoji: '🍖' },
-      { name: 'crow', emoji: '🐦' },
+      { name: 'crow', emoji: '🐦‍⬛' },
+      { name: 'blue jay', emoji: '🦤' },
       { name: 'goat', emoji: '🐐' },
       { name: 'sausage', emoji: '🌭' },
       { name: 'gator', emoji: '🐊' },
@@ -199,6 +204,7 @@ export default function HomeScreen() {
       { name: 'apple', emoji: '🍎' },
       { name: 'banana', emoji: '🍌' },
       { name: 'lemon', emoji: '🍋' },
+      { name: 'grapes', emoji: '🍇' },
       { name: 'orange', emoji: '🍊' },
       { name: 'mango', emoji: '🥭' },
       { name: 'avocado', emoji: '🥑' },
@@ -206,7 +212,10 @@ export default function HomeScreen() {
       { name: 'dragon fruit', emoji: '🐉' },
       { name: 'carambola', emoji: '🌟' },
       { name: 'coconuts', emoji: '🥥' },
+      { name: 'jack fruit', emoji: '🥝' },
       { name: 'lychee', emoji: '🍒' },
+      { name: 'strawberries', emoji: '🍓' },
+	  { name: 'blueberries', emoji: '💙' },
     ],
     seafood: [
       { name: 'salmon', emoji: '🐟' },
@@ -244,10 +253,15 @@ export default function HomeScreen() {
       { name: 'eggs', emoji: '🥚' },
     ],
     carbs: [
-      { name: 'pasta', emoji: '🍝' },
+      { name: 'spaghetti pasta', emoji: '🍝' },
+      { name: 'mac and cheese pasta', emoji: '🧀' },
       { name: 'white rice', emoji: '🍚' },
       { name: 'yellow rice', emoji: '🍚' },
       { name: 'rice', emoji: '🍚' },
+	  { name: 'oats', emoji: '🍚' },
+      { name: 'popcorn', emoji: '🍿' },
+      { name: 'sweet potato', emoji: '🍠' },
+      { name: 'twice baked potato', emoji: '🥔' },
     ],
     breads: [
       { name: 'bread', emoji: '🍞' },
@@ -263,16 +277,18 @@ export default function HomeScreen() {
       { name: 'white bread', emoji: '🍞' },
       { name: 'wheat bread', emoji: '🍞' },
       { name: 'toast', emoji: '🍞' },
+      { name: 'buckwheat', emoji: '🌾' },
     ],
     beans: [
       { name: 'black beans', emoji: '🫘' },
-      { name: 'red beans', emoji: '🫘' },
-      { name: 'baked beans', emoji: '🫘' },
+      { name: 'red beans', emoji: '🐮' },
+      { name: 'baked beans', emoji: '👁️💨' },
       { name: 'lima beans', emoji: '🫘' },
-      { name: 'black-eyed peas', emoji: '🫘' },
+      { name: 'black-eyed peas', emoji: '💩' },
       { name: 'pinto beans', emoji: '🫘' },
-      { name: 'kidney beans', emoji: '🫘' },
+      { name: 'kidney beans', emoji: '🫢' },
       { name: 'navy beans', emoji: '🫘' },
+	  { name: 'garbanzo beans', emoji: '🫘' },
     ],
     devilWater: [
       { name: 'beer', emoji: '🍺' },
@@ -835,7 +851,7 @@ export default function HomeScreen() {
             className="fruits"
           />
           <PickerSection
-            label="🦐 Sea Critter Chaos 🐟"
+            label="🦐 Sea Critters 🐟"
             category="seafood"
             value={seafood}
             onValueChange={setSeafood}
@@ -847,6 +863,7 @@ export default function HomeScreen() {
             value={dairy}
             onValueChange={setDairy}
             className="dairy"
+            labelStyle={{ color: '#000000' }} // Set text color to black
           />
           <PickerSection
             label="🍚 Grain & Pasta Party 🍝"
@@ -865,7 +882,7 @@ export default function HomeScreen() {
             labelStyle={{ color: '#FFFFFF' }}
           />
           <PickerSection
-            label="🥫 Bubba's Bean Bonanza 🥫"
+            label="🥫 Beans Bonanza 💩"
             category="beans"
             value={beans}
             onValueChange={setBeans}
@@ -955,7 +972,7 @@ export default function HomeScreen() {
           )}
           <div className="donation-section">
             <p className="donation-message">
-              🍺 xAi ain't free! To help pay for sweet southern Ai recipes donate some bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ( $barlitorobusto ). Thank Ye 🤠
+              🍺 To help pay for sweet southern xAi recipes donate bucks or sweet gold nuggets to <a href="mailto:bshoemak@mac.com" className="donation-email">bshoemak@mac.com</a> via Zelle, Apple Pay, or CashApp ($barlitorobusto). Thank Ye 🤠
             </p>
           </div>
           <AffiliateSection />
